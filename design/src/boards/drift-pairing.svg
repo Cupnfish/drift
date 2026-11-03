@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="980" viewBox="0 0 1200 980" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Drift 配对与信任</title>
+  <desc id="desc">本地配对流程板：桌面端自动发现附近设备，配对时两端显示同一组六位码供核对；列出等待确认、配对成功、号码不一致三种状态，以及自动发现、一码对照、双向确认、随时撤销四条规则。配对码只用于对照，不需要输入。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="980" gradientUnits="userSpaceOnUse">
+      <stop stop-color="{{sunken-alt}}"/>
+      <stop offset="1" stop-color="#EDF0F7"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="{{accent}}"/>
+      <stop offset="1" stop-color="{{accent-strong}}"/>
+    </linearGradient>
+    <filter id="card" x="-10%" y="-10%" width="120%" height="125%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="{{shadow}}" flood-opacity="0.06"/>
+    </filter>
+    <filter id="phone" x="-20%" y="-10%" width="140%" height="120%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="{{shadow}}" flood-opacity="0.14"/>
+    </filter>
+    <clipPath id="phoneClip"><rect x="0" y="0" width="390" height="844" rx="36"/></clipPath>
+    <!-- @icons -->
+    <style>
+      text { font-family: Inter, "SF Pro Display", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .ink { fill: {{ink}}; }
+      .muted { fill: {{muted}}; }
+      .faint { fill: {{faint}}; }
+      .mono { font-family: "SF Mono", "JetBrains Mono", Menlo, monospace; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="980" fill="url(#bg)"/>
+  <text x="48" y="66" class="ink" font-size="25" font-weight="750" letter-spacing="-.03em">Drift · 配对与信任</text>
+  <text x="48" y="92" class="muted" font-size="12">同一 Wi-Fi 下自动发现，两端显示同一组号码，核对一致即可配对</text>
+  <text x="1152" y="66" class="faint" font-size="11" text-anchor="end">与主界面配套 · v1.5</text>
+  <!-- Desktop pairing sheet -->
+  <g filter="url(#card)"><rect x="48" y="120" width="536" height="580" rx="24" fill="{{surface}}" stroke="{{line}}"/></g>
+  <text x="80" y="168" class="ink" font-size="19" font-weight="700">配对新设备</text>
+  <use href="#i-close" x="532" y="148" width="18" height="18" color="{{faint}}"/>
+  <text x="80" y="192" class="muted" font-size="11">点一台附近设备，两端会同时出现同一组号码</text>
+
+  <text x="80" y="228" class="muted" font-size="10" font-weight="650" letter-spacing=".04em">附近设备</text>
+  <text x="552" y="228" class="faint" font-size="10" text-anchor="end">2 台在线</text>
+
+  <rect x="96" y="238" width="440" height="64" rx="16" fill="#F6F5FF" stroke="{{accent-line}}"/>
+  <rect x="108" y="250" width="40" height="40" rx="13" fill="{{surface}}"/>
+  <use href="#i-phone" x="117" y="259" width="22" height="22" color="{{accent-icon}}"/>
+  <text x="160" y="266" class="ink" font-size="12.5" font-weight="650">iPhone 15</text>
+  <text x="160" y="284" class="muted" font-size="10">在线 · 同一 Wi-Fi</text>
+  <circle cx="484" cy="270" r="11" fill="#6157E8"/>
+  <use href="#i-check" x="478" y="264" width="12" height="12" color="{{on-accent}}"/>
+
+  <rect x="96" y="310" width="440" height="64" rx="16" fill="#FAFBFD"/>
+  <rect x="108" y="322" width="40" height="40" rx="13" fill="{{surface}}"/>
+  <use href="#i-monitor" x="117" y="331" width="22" height="22" color="{{icon}}"/>
+  <text x="160" y="338" class="ink" font-size="12.5" font-weight="600">客厅 Windows</text>
+  <text x="160" y="356" class="muted" font-size="10">在线 · 5 分钟前活跃</text>
+  <use href="#i-arrow" x="478" y="334" width="16" height="16" color="{{disabled}}"/>
+
+  <circle cx="96" cy="394" r="4" fill="#C6C1F4"/>
+  <circle cx="96" cy="394" r="8" stroke="#D8D4F8" stroke-width="1.2"/>
+  <text x="112" y="398" class="faint" font-size="10">正在查找更多设备…</text>
+
+  <path d="M80 420h472" stroke="#EDEFF5"/>
+  <text x="80" y="450" class="muted" font-size="10" font-weight="650" letter-spacing=".04em">核对配对码</text>
+  <text x="552" y="450" class="faint" font-size="10" text-anchor="end">3 分钟内有效</text>
+
+  <rect x="80" y="466" width="472" height="60" rx="16" fill="#F7F6FF"/>
+  <text x="301" y="507" class="ink mono" font-size="34" font-weight="600" letter-spacing="4" text-anchor="end">482</text>
+  <text x="331" y="507" class="ink mono" font-size="34" font-weight="600" letter-spacing="4" text-anchor="start">916</text>
+
+  <text x="80" y="548" class="muted" font-size="10.5">iPhone 15 上应显示同一组数字，不一致就点「不一致」</text>
+
+  <rect x="80" y="568" width="230" height="42" rx="14" fill="url(#accent)"/>
+  <use href="#i-check" x="152" y="581" width="16" height="16" color="{{on-accent}}"/>
+  <text x="178" y="595" fill="{{on-accent}}" font-size="12" font-weight="650">一致，配对</text>
+  <rect x="322" y="568" width="230" height="42" rx="14" fill="{{surface}}" stroke="#E1E3EC"/>
+  <text x="437" y="595" class="muted" font-size="12" font-weight="600" text-anchor="middle">不一致</text>
+
+  <rect x="80" y="634" width="472" height="34" rx="11" fill="#F7F8FC"/>
+  <use href="#i-shield" x="92" y="644" width="14" height="14" color="{{faint}}"/>
+  <text x="112" y="656" class="faint" font-size="9.5">号码只用于两端对照，不会上传 · 配对后可在设备列表随时撤销</text>
+  <!-- Mobile: same code on both ends, no typing -->
+  <g filter="url(#phone)"><rect x="600" y="102" width="299" height="624" rx="38" fill="{{surface}}" stroke="#E3E5EC"/></g>
+  <g transform="translate(609 110) scale(0.72)">
+    <g clip-path="url(#phoneClip)">
+      <rect width="390" height="844" fill="{{canvas}}"/>
+      <g stroke="{{ink}}" stroke-width="1.4" stroke-linecap="round">
+        <path d="M313 25v3M318 22v6M323 19v9M328 16v12"/>
+        <path d="M338 21c4-4 10-4 14 0M341 24c2-2 6-2 8 0M345 28h.1"/>
+      </g>
+      <text x="26" y="31" fill="{{ink}}" font-size="16" font-weight="700">9:41</text>
+      <rect x="360" y="18" width="22" height="11" rx="3" stroke="{{ink}}" stroke-width="1.2" opacity=".55"/>
+      <rect x="362" y="20" width="16" height="7" rx="1.5" fill="{{ink}}" opacity=".55"/>
+      <path d="M383 21v5" stroke="{{ink}}" stroke-width="1.5" stroke-linecap="round" opacity=".55"/>
+
+      <circle cx="30" cy="74" r="16" fill="#F2F3F7"/>
+      <use href="#i-close" x="22" y="66" width="16" height="16" color="{{muted}}"/>
+      <text x="195" y="79" fill="{{ink}}" font-size="17.5" font-weight="650" text-anchor="middle">配对新设备</text>
+
+      <text x="24" y="118" fill="{{muted}}" font-size="17.5">同一 Wi-Fi 下自动发现，两端显示同一组号码</text>
+
+      <rect x="20" y="140" width="350" height="62" rx="16" fill="#F6F5FF" stroke="{{accent-line}}"/>
+      <rect x="32" y="152" width="38" height="38" rx="12" fill="{{surface}}"/>
+      <use href="#i-laptop" x="41" y="161" width="20" height="20" color="{{accent-icon}}"/>
+      <text x="80" y="166" fill="{{ink}}" font-size="15.5" font-weight="650">MacBook Pro</text>
+      <text x="80" y="184" fill="{{muted}}" font-size="12.5">在线 · 同一 Wi-Fi</text>
+      <circle cx="332" cy="171" r="11" fill="#6157E8"/>
+      <use href="#i-check" x="326" y="165" width="12" height="12" color="{{on-accent}}"/>
+
+      <rect x="20" y="228" width="350" height="332" rx="24" fill="{{surface}}" stroke="{{line-strong}}"/>
+      <text x="195" y="272" fill="{{muted}}" font-size="10" text-anchor="middle">核对配对码</text>
+      <text x="180" y="356" class="mono" fill="{{ink}}" font-size="46" font-weight="600" letter-spacing="4" text-anchor="end">482</text>
+      <text x="210" y="356" class="mono" fill="{{ink}}" font-size="46" font-weight="600" letter-spacing="4" text-anchor="start">916</text>
+      <path d="M48 404h294" stroke="{{line-soft}}"/>
+      <text x="195" y="436" fill="{{muted}}" font-size="17.5" text-anchor="middle">MacBook Pro 上应显示同一组数字</text>
+      <text x="195" y="458" fill="{{muted}}" font-size="17.5" text-anchor="middle">两端一致才继续配对</text>
+      <rect x="131" y="486" width="128" height="24" rx="12" fill="#F1F0FF"/>
+      <text x="195" y="502" fill="#6157E8" font-size="12.5" font-weight="650" text-anchor="middle">对照用，不需要输入</text>
+
+      <rect x="20" y="596" width="350" height="48" rx="16" fill="url(#accent)"/>
+      <use href="#i-check" x="134" y="610" width="20" height="20" color="{{on-accent}}"/>
+      <text x="164" y="627" fill="{{on-accent}}" font-size="16" font-weight="650">一致，确认配对</text>
+
+      <rect x="20" y="656" width="350" height="44" rx="15" fill="{{surface}}" stroke="#E1E3EC"/>
+      <text x="195" y="683" fill="{{muted}}" font-size="15.5" font-weight="600" text-anchor="middle">不一致，取消</text>
+
+
+      <rect x="135" y="820" width="120" height="5" rx="2.5" fill="{{ink}}" opacity=".8"/>
+    </g>
+  </g>
+  <!-- States -->
+  <g filter="url(#card)"><rect x="916" y="110" width="236" height="184" rx="20" fill="{{surface}}" stroke="{{line}}"/></g>
+  <circle cx="940" cy="144" r="15" fill="{{accent-soft}}"/>
+  <use href="#i-phone" x="932" y="136" width="16" height="16" color="{{accent-icon}}"/>
+  <text x="964" y="149" class="ink" font-size="12.5" font-weight="700">等待确认</text>
+  <text x="940" y="188" class="muted" font-size="10">两端都显示 482 916，</text>
+  <text x="940" y="205" class="muted" font-size="10">核对后各点一次「一致」</text>
+  <path d="M940 232h188" stroke="{{line-soft}}"/>
+  <text x="940" y="262" fill="{{accent-mute}}" font-size="9.5" font-weight="600">有效期剩余 02:41</text>
+
+  <g filter="url(#card)"><rect x="916" y="306" width="236" height="184" rx="20" fill="{{surface}}" stroke="{{line}}"/></g>
+  <circle cx="940" cy="340" r="15" fill="#E6F7F0"/>
+  <use href="#i-check" x="932" y="332" width="16" height="16" color="#24A674"/>
+  <text x="964" y="345" class="ink" font-size="12.5" font-weight="700">配对成功</text>
+  <text x="940" y="384" class="muted" font-size="10">MacBook Pro 已加入</text>
+  <text x="940" y="401" class="muted" font-size="10">自动接收已开启</text>
+  <path d="M940 428h188" stroke="{{line-soft}}"/>
+  <text x="940" y="458" fill="{{success}}" font-size="9.5" font-weight="600">已建立双向信任</text>
+
+  <g filter="url(#card)"><rect x="916" y="502" width="236" height="184" rx="20" fill="{{surface}}" stroke="{{line}}"/></g>
+  <circle cx="940" cy="536" r="15" fill="{{danger-soft}}"/>
+  <use href="#i-warn" x="932" y="528" width="16" height="16" color="{{danger}}"/>
+  <text x="964" y="541" class="ink" font-size="12.5" font-weight="700">号码不一致</text>
+  <text x="940" y="580" class="muted" font-size="10">任一端点「不一致」，</text>
+  <text x="940" y="597" class="muted" font-size="10">本次配对立即作废</text>
+  <rect x="940" y="618" width="96" height="32" rx="10" fill="#F5F6FA"/>
+  <text x="988" y="637" class="muted" font-size="10" font-weight="650" text-anchor="middle">重新发起</text>
+  <!-- Rules -->
+  <g filter="url(#card)"><rect x="48" y="736" width="264" height="168" rx="20" fill="{{surface}}" stroke="{{line}}"/></g>
+  <circle cx="76" cy="780" r="16" fill="{{accent-soft}}"/>
+  <use href="#i-radar" x="68" y="772" width="16" height="16" color="{{accent-icon}}"/>
+  <text x="76" y="828" class="ink" font-size="13" font-weight="700">自动发现</text>
+  <text x="76" y="852" class="muted" font-size="10">同一 Wi-Fi 下自动列出，</text>
+  <text x="76" y="869" class="muted" font-size="10">不用手动填 IP 地址</text>
+
+  <g filter="url(#card)"><rect x="328" y="736" width="264" height="168" rx="20" fill="{{surface}}" stroke="{{line}}"/></g>
+  <circle cx="356" cy="780" r="16" fill="{{accent-soft}}"/>
+  <use href="#i-eye" x="348" y="772" width="16" height="16" color="{{accent-icon}}"/>
+  <text x="356" y="828" class="ink" font-size="13" font-weight="700">一码对照</text>
+  <text x="356" y="852" class="muted" font-size="10">两端显示同一组号码，</text>
+  <text x="356" y="869" class="muted" font-size="10">由人眼比对，不需要输入</text>
+
+  <g filter="url(#card)"><rect x="608" y="736" width="264" height="168" rx="20" fill="{{surface}}" stroke="{{line}}"/></g>
+  <circle cx="636" cy="780" r="16" fill="{{accent-soft}}"/>
+  <use href="#i-link" x="628" y="772" width="16" height="16" color="{{accent-icon}}"/>
+  <text x="636" y="828" class="ink" font-size="13" font-weight="700">双向确认</text>
+  <text x="636" y="852" class="muted" font-size="10">两端各点一次「一致」</text>
+  <text x="636" y="869" class="muted" font-size="10">才建立信任，避免误配</text>
+
+  <g filter="url(#card)"><rect x="888" y="736" width="264" height="168" rx="20" fill="{{surface}}" stroke="{{line}}"/></g>
+  <circle cx="916" cy="780" r="16" fill="{{accent-soft}}"/>
+  <use href="#i-unlink" x="908" y="772" width="16" height="16" color="{{accent-icon}}"/>
+  <text x="916" y="828" class="ink" font-size="13" font-weight="700">随时撤销</text>
+  <text x="916" y="852" class="muted" font-size="10">设备列表右键移除，</text>
+  <text x="916" y="869" class="muted" font-size="10">立即断开信任与自动接收</text>
+
+  <text x="48" y="946" class="faint" font-size="10">配对信息仅保存在本机 · 传输走局域网，不经过服务器</text>
+  <text x="1152" y="946" class="faint" font-size="10" text-anchor="end">未配对设备看不到记录，也无法主动发送内容</text>
+</svg>

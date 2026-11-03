@@ -1,0 +1,214 @@
+# 多平台打包与发布（Windows / macOS / Linux / Android）
+#
+# nsh 官方没有现成的应用 CI action：官方仓库的 workflow 只测 nsh 自身，
+# 这里按官方文档（nsh.dev/docs/installation、/docs/packaging）与其仓库约定组装：
+# - nsh CLI 用官方安装脚本装「最新 release」（macOS/Linux: install.sh，Windows:
+#   install.ps1）；要锁版本时设 env NSH_VERSION（如 "0.3.1"），不用改脚本。
+# - Rust 应用（nsh.json "root"）由 nsh 调 cargo 编译各平台 runner：
+#   Linux 需要 GTK4 开发库，Android 需要 SDK(platforms;android-35 + build-tools)
+#   + NDK + JDK，并 rustup 三个 ABI 目标（arm64-v8a / armeabi-v7a / x86_64）。
+# - 版本元数据在打 tag（v*）时以 --app-version 覆盖，--build 恒取 run number。
+# - push main / PR：跑测试 + 各平台打包，产物传到 workflow 的 Artifacts；
+#   打 v* tag：另外汇总成 GitHub Release（附件含校验和）。
+#
+# Android 正式签名（可选）：在仓库 Secrets 配 NSH_KEYSTORE_BASE64 / 等，
+# 再在 android 步骤里解出 --keystore/--key-alias 与 NSH_KEYSTORE_PASSWORD；
+# 未配置时用调试签名（可直接安装，不能上架商店）。
+
+name: release
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  # 同分支新提交取消旧跑；tag 是发布，绝不中途取消
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+env:
+  # nsh 仓库 CI 同款：一次干净构建，更快、缓存更小
+  CARGO_INCREMENTAL: "0"
+  # 锁定 nsh 版本时取消注释（安装脚本默认取最新 release）
+  # NSH_VERSION: "0.3.1"
+
+jobs:
+  # —— 测试门禁：cargo test + App.test.tsx headless 冒烟 ——
+  test:
+    name: test (ubuntu)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      # GUI 依赖 nsh-platform-linux（GTK 4.14+）；clang/libclang 供 bindgen
+      - name: Install GTK 4 and clang
+        run: sudo apt-get update && sudo apt-get install -y clang libclang-dev libgtk-4-dev
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Cargo
+        uses: Swatinem/rust-cache@v2
+        with:
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: Install nsh (latest)
+        run: |
+          curl -fsSL https://nsh.dev/install.sh | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          "$HOME/.local/bin/nsh" -V
+
+      # nsh test 会先跑 Rust crates 的 cargo test，再跑 *.test.tsx headless
+      - name: nsh test
+        env:
+          TMPDIR: ${{ runner.temp }}
+        run: DRIFT_DATA_DIR="$(mktemp -d)" nsh test
+
+  # —— 多平台打包：产物先传 Artifacts，tag 时再进 Release ——
+  package:
+    name: package (${{ matrix.target }})
+    needs: test
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: windows
+            os: windows-latest
+          - target: macos
+            os: macos-15 # arm64；AppKit + ad hoc 签名，Xcode 自带
+          - target: linux
+            os: ubuntu-24.04 # 22.04 的 GTK 4.6 过旧，必须 24.04（GTK 4.14+）
+          - target: android
+            os: ubuntu-24.04
+    runs-on: ${{ matrix.os }}
+    env:
+      TARGET: ${{ matrix.target }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      # Linux（桌面与 Android 共用）：GTK4 开发库 + clang/libclang
+      - name: Install GTK 4 and clang
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y clang libclang-dev libgtk-4-dev
+
+      # Windows（nsh 官方 windows.yml 同款）：bindgen 用镜像自带 LLVM 的
+      # libclang；windows crate 绑定编译时 rustc 需要更大的栈
+      - name: Windows build env
+        if: matrix.target == 'windows'
+        run: |
+          echo 'LIBCLANG_PATH=C:\Program Files\LLVM\bin' >> "$GITHUB_ENV"
+          echo 'RUST_MIN_STACK=268435456' >> "$GITHUB_ENV"
+
+      # Android：补齐 SDK 组件并指到运行器自带的 NDK（Rust 应用交叉编译要用）
+      - name: Set up Android SDK and NDK
+        if: matrix.target == 'android'
+        run: |
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          yes | "$SDKMANAGER" --licenses >/dev/null || true
+          "$SDKMANAGER" --install "platforms;android-35" "build-tools;35.0.0" "platform-tools" >/dev/null
+          NDK_VERSION="$(ls -1 "$ANDROID_HOME/ndk" 2>/dev/null | sort -V | tail -1)"
+          if [ -z "$NDK_VERSION" ]; then
+            "$SDKMANAGER" --install "ndk;28.0.12433566" >/dev/null
+            NDK_VERSION="28.0.12433566"
+          fi
+          echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/$NDK_VERSION" >> "$GITHUB_ENV"
+          echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/$NDK_VERSION" >> "$GITHUB_ENV"
+
+      # Android 的运行时含三个 ABI，对应 rustup 目标全加上
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target == 'android' && 'aarch64-linux-android,armv7-linux-androideabi,x86_64-linux-android' || '' }}
+
+      - name: Cache Cargo
+        uses: Swatinem/rust-cache@v2
+        with:
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: Install nsh (latest, Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          irm https://nsh.dev/install.ps1 | iex
+          Add-Content $env:GITHUB_PATH "$env:LOCALAPPDATA\nsh\bin"
+
+      - name: Install nsh (latest, macOS/Linux)
+        if: runner.os != 'Windows'
+        run: |
+          curl -fsSL https://nsh.dev/install.sh | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Show nsh version
+        run: nsh -V
+
+      - name: Package
+        run: |
+          args=(--build "$GITHUB_RUN_NUMBER")
+          # 只有打 v* tag 才用 tag 覆盖版本号；平时沿用 nsh.json 的 version
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            args+=(--app-version "${GITHUB_REF_NAME#v}")
+          fi
+          nsh package --target "$TARGET" -o dist "${args[@]}"
+          find dist -type f -exec ls -l {} +
+
+      # 汇总可分发文件：windows→.zip、linux→.tar.gz、android→.apk 原样；
+      # macos 只产 .app，用 ditto 打成保留签名与符号链接的 zip
+      - name: Collect artifacts
+        run: |
+          mkdir -p release
+          find dist -type f \( -name '*.zip' -o -name '*.tar.gz' -o -name '*.apk' \) -exec cp {} release/ \;
+          for app in dist/*.app; do
+            [ -e "$app" ] || continue
+            ditto -c -k --keepParent "$app" "release/$(basename "${app%.app}")-macos.app.zip"
+          done
+          (cd release && { sha256sum * 2>/dev/null || shasum -a 256 *; } > "$RUNNER_TEMP/checksums-$TARGET.txt")
+          cp "$RUNNER_TEMP/checksums-$TARGET.txt" "release/checksums-$TARGET.txt"
+          ls -l release
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: drift-${{ matrix.target }}
+          path: release/
+          if-no-files-found: error
+          retention-days: 14
+
+  # —— 打 v* tag：汇总四平台产物发布 GitHub Release ——
+  release:
+    name: publish release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: package
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release
+          merge-multiple: true
+
+      - name: Merge checksums
+        run: |
+          cd release
+          cat checksums-*.txt > SHA256SUMS
+          rm checksums-*.txt
+          ls -l
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/*
+          generate_release_notes: true
+          fail_on_unmatched_files: true

@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Drift 移动端空白引导</title>
+  <desc id="desc">390 乘 844 的移动端首次启动空白页：没有配对设备时，用两台设备与在途文件的示意说明配对，提供查找附近设备与查看本机配对码两个入口，并用三行说明配对后的添加、发送与记录方式；底部输入区在配对前禁用。</desc>
+  <defs>
+    <linearGradient id="mAccent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="{{accent}}"/>
+      <stop offset="1" stop-color="{{accent-strong}}"/>
+    </linearGradient>
+    <radialGradient id="mGlow" cx=".5" cy=".5" r=".5">
+      <stop stop-color="#F1EFFC" stop-opacity=".95"/>
+      <stop offset=".72" stop-color="#F3F1FC" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#F5F4FE" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="mShadow" x="-30%" y="-30%" width="160%" height="170%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="4" stdDeviation="9" flood-color="{{shadow}}" flood-opacity="0.09"/>
+    </filter>
+    <!-- @icons -->
+    <style>
+      text { font-family: Inter, "SF Pro Display", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .ink { fill: {{ink}}; }
+      .muted { fill: {{muted}}; }
+      .faint { fill: {{faint}}; }
+    </style>
+  </defs>
+
+  <rect width="390" height="844" fill="{{canvas}}"/>
+  <text x="370" y="70" class="mono faint ui" font-size="9" text-anchor="end">v1.5</text>
+  <!-- Status bar -->
+  <text x="26" y="31" class="ink" font-size="13" font-weight="700">9:41</text>
+  <g stroke="{{ink}}" stroke-width="1.5" stroke-linecap="round">
+    <path d="M313 25v3M318 22v6M323 19v9M328 16v12"/>
+    <path d="M338 21c4-4 10-4 14 0M341 24c2-2 6-2 8 0M345 28h.1"/>
+  </g>
+  <rect x="360" y="18" width="22" height="11" rx="3" stroke="{{ink}}" stroke-width="1.2"/>
+  <rect x="362" y="20" width="16" height="7" rx="1.5" fill="{{ink}}"/>
+  <path d="M383 21v5" stroke="{{ink}}" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Header -->
+  <rect x="20" y="50" width="32" height="32" rx="10" fill="url(#mAccent)"/>
+  <use href="#i-send" x="27" y="57" width="18" height="18" color="{{on-accent}}"/>
+  <text x="62" y="74" class="ink" font-size="22" font-weight="750" letter-spacing="-.04em">Drift</text>
+  <path d="M268 61h18M272 68h10M276 75h2" stroke="{{icon}}" stroke-width="1.7" stroke-linecap="round"/>
+  <use href="#i-search" x="304" y="57" width="21" height="21" color="{{icon}}"/>
+  <use href="#i-more" x="346" y="57" width="21" height="21" color="{{icon}}"/>
+  <!-- Empty illustration -->
+  <ellipse cx="195" cy="190" rx="166" ry="92" fill="url(#mGlow)"/>
+  <rect x="104" y="164" width="56" height="56" rx="18" fill="{{surface}}" stroke="#E4E2F4"/>
+  <use href="#i-laptop" x="120" y="180" width="24" height="24" color="{{accent}}"/>
+  <rect x="230" y="164" width="56" height="56" rx="18" fill="{{surface}}" stroke="#E4E2F4"/>
+  <use href="#i-phone" x="246" y="180" width="24" height="24" color="{{accent}}"/>
+  <path d="M160 192C178 170 212 170 230 192" stroke="{{accent-line-soft}}" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 6"/>
+  <circle cx="160" cy="192" r="2.2" fill="{{accent-line-soft}}"/>
+  <path d="m219 180 6 6-6 6" stroke="#B7AFF0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <g filter="url(#mShadow)"><rect x="159" y="126" width="72" height="30" rx="10" fill="{{surface}}" stroke="#DCD8F8"/></g>
+  <rect x="167" y="134" width="14" height="14" rx="4" fill="#F0EEFF"/>
+  <use href="#i-file" x="169" y="136" width="10" height="10" color="{{file-ink}}"/>
+  <text x="187" y="144" class="ink" font-size="9" font-weight="650">8.4 MB</text>
+  <!-- Copy -->
+  <text x="195" y="300" class="ink" font-size="21" font-weight="750" text-anchor="middle" letter-spacing="-.02em">先配对一台设备</text>
+  <text x="195" y="330" class="muted" font-size="12" text-anchor="middle">在电脑上打开 Drift，会自动发现这台设备，</text>
+  <text x="195" y="350" class="muted" font-size="12" text-anchor="middle">核对配对码即可互传。传输不经过服务器。</text>
+
+  <rect x="85" y="382" width="220" height="46" rx="15" fill="url(#mAccent)"/>
+  <use href="#i-radar" x="143" y="396" width="18" height="18" color="{{on-accent}}"/>
+  <text x="169" y="409" fill="{{on-accent}}" font-size="13" font-weight="650">查找附近设备</text>
+
+  <text x="195" y="463" class="muted" font-size="11.5" font-weight="600" text-anchor="middle">查看本机配对码</text>
+  <!-- What happens after pairing -->
+  <rect x="20" y="496" width="350" height="120" rx="18" fill="#F7F8FC"/>
+  <text x="38" y="524" fill="{{accent}}" font-size="9.5" font-weight="700">01</text>
+  <text x="66" y="524" class="ink" font-size="11">配对后，输入文本或添加文件即弹出设备层</text>
+  <text x="38" y="556" fill="{{accent}}" font-size="9.5" font-weight="700">02</text>
+  <text x="66" y="556" class="ink" font-size="11">无发送按钮，点设备即发，改内容可增量补发</text>
+  <text x="38" y="588" fill="{{accent}}" font-size="9.5" font-weight="700">03</text>
+  <text x="66" y="588" class="ink" font-size="11">所有设备的记录排在同一条时间线上</text>
+
+  <text x="195" y="648" class="faint" font-size="9.5" text-anchor="middle">配对后可在设备列表里随时撤销</text>
+  <!-- Disabled composer (no send button) -->
+  <rect x="20" y="712" width="350" height="60" rx="20" fill="{{surface}}" stroke="#E6E7EE"/>
+  <rect x="32" y="724" width="36" height="36" rx="12" fill="{{idle-alt}}"/>
+  <use href="#i-plus" x="40" y="732" width="20" height="20" color="{{flag}}"/>
+  <text x="82" y="746" fill="{{disabled}}" font-size="12.5">配对后输入内容即自动弹出发送设备…</text>
+
+  <text x="195" y="796" class="faint" font-size="10" text-anchor="middle">支持文件、文本与图片 · 记录仅保存在本机</text>
+  <rect x="135" y="828" width="120" height="5" rx="2.5" fill="{{ink}}" opacity=".85"/>
+</svg>

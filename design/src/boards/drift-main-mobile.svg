@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Drift 移动端主界面（无发送键 · 设备球体 · 增量发送）</title>
+  <desc id="desc">390 乘 844 的移动端主界面。输入区没有发送键，输入框只显示正在编辑的文字，不标注差异。输入框一有内容，附近设备以漂浮球体的形式出现在会话上方，状态画在球体的环上：紫色进度环表示传输中，虚线橙环表示内容改过、点按只补发，绿色整环表示已同步，灰色部分环表示已暂停。点按球体即发送；虚线加号球用于添加并配对设备。设备多时可拖动空白处平移画布，画布边缘露出被裁掉的球体作为提示。</desc>
+  <defs>
+    <radialGradient id="mHalo" cx=".5" cy=".38" r=".62">
+      <stop offset="0" stop-color="{{accent}}" stop-opacity=".10"/>
+      <stop offset="1" stop-color="{{accent}}" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="mOrb" cx=".34" cy=".26" r=".9">
+      <stop offset="0" stop-color="{{surface}}"/>
+      <stop offset=".56" stop-color="{{surface}}"/>
+      <stop offset="1" stop-color="{{sunken}}"/>
+    </radialGradient>
+    <radialGradient id="mOrbHot" cx=".34" cy=".26" r=".9">
+      <stop offset="0" stop-color="{{surface}}"/>
+      <stop offset=".5" stop-color="{{accent-wash}}"/>
+      <stop offset="1" stop-color="{{sunken}}"/>
+    </radialGradient>
+    <radialGradient id="mSpec" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="{{on-accent}}" stop-opacity=".72"/>
+      <stop offset="1" stop-color="{{on-accent}}" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mAccent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="{{accent}}"/>
+      <stop offset="1" stop-color="{{accent-strong}}"/>
+    </linearGradient>
+    <filter id="mOrbShadow" x="-70%" y="-70%" width="240%" height="260%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="5" stdDeviation="9" flood-color="{{shadow}}" flood-opacity="0.11"/>
+    </filter>
+    <filter id="mGlow" x="-120%" y="-120%" width="340%" height="340%"><feGaussianBlur stdDeviation="5"/></filter>
+    <filter id="mComposer" x="-6%" y="-40%" width="112%" height="190%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="2" stdDeviation="12" flood-color="{{accent}}" flood-opacity="0.13"/>
+    </filter>
+    <clipPath id="mScreen"><rect x="0" y="0" width="390" height="844"/></clipPath>
+    <!-- @icons -->
+    <style>
+      text { font-family: Inter, "SF Pro Display", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .mono { font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Mono", Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace; letter-spacing: .03em; }
+      .ink { fill: {{ink}}; }
+      .body { fill: {{body}}; }
+      .muted { fill: {{muted}}; }
+      .faint { fill: {{faint}}; }
+      .ui { font-variant-numeric: tabular-nums; }
+      .caret { animation: m-blink 1.1s steps(1) infinite; }
+      .bob { animation: m-bob 7s ease-in-out infinite; }
+      .b1 { animation-duration: 7.6s; animation-delay: -.7s; }
+      .b2 { animation-duration: 6.5s; animation-delay: -2.2s; }
+      .b3 { animation-duration: 8.3s; animation-delay: -3.5s; }
+      .b4 { animation-duration: 7.2s; animation-delay: -1.3s; }
+      .b5 { animation-duration: 8.7s; animation-delay: -4.4s; }
+      .spin { animation: m-spin 4.6s linear infinite; }
+      @keyframes m-blink { 50% { opacity: 0; } }
+      @keyframes m-bob { 50% { transform: translateY(-5px); } }
+      @keyframes m-spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) { .caret, .bob, .spin { animation: none; } }
+    </style>
+  </defs>
+
+  <g clip-path="url(#mScreen)">
+    <rect width="390" height="844" fill="{{canvas}}"/>
+    <rect width="390" height="844" fill="url(#mHalo)"/>
+
+    <!-- 状态栏 -->
+    <text x="26" y="31" class="ink" font-size="13" font-weight="700">9:41</text>
+    <g stroke="{{ink}}" stroke-width="1.5" stroke-linecap="round">
+      <path d="M313 25v3M318 22v6M323 19v9M328 16v12"/>
+      <path d="M338 21c4-4 10-4 14 0M341 24c2-2 6-2 8 0M345 28h.1"/>
+    </g>
+    <rect x="360" y="18" width="22" height="11" rx="3" stroke="{{ink}}" stroke-width="1.2"/>
+    <rect x="362" y="20" width="16" height="7" rx="1.5" fill="{{ink}}"/>
+    <path d="M383 21v5" stroke="{{ink}}" stroke-width="1.5" stroke-linecap="round"/>
+
+    <!-- 顶栏 -->
+    <rect x="20" y="50" width="28" height="28" rx="9" fill="url(#mAccent)"/>
+    <use href="#i-send" x="26" y="56" width="16" height="16" color="{{on-accent}}"/>
+    <text x="58" y="70" class="ink" font-size="19" font-weight="650" letter-spacing="-.03em">Drift</text>
+    <text x="306" y="68" class="mono faint ui" font-size="10" text-anchor="end">4 台在线</text>
+    <circle cx="316" cy="64.5" r="3" fill="{{accent}}"/>
+    <use href="#i-search" x="336" y="57" width="19" height="19" color="{{icon}}"/>
+    <use href="#i-more" x="366" y="57" width="19" height="19" color="{{icon}}"/>
+
+    <!-- 会话：两条，被球体盖住大半也没关系，它是背景层 -->
+    <rect x="20" y="96" width="24" height="24" rx="8" fill="{{idle}}"/>
+    <use href="#i-file" x="25" y="101" width="14" height="14" color="{{muted}}"/>
+    <text x="54" y="106" class="ink" font-size="12" font-weight="600">Drift-UI-Kit.fig</text>
+    <text x="54" y="120" class="mono faint ui" font-size="9.5">来自 MacBook Pro · 24.8 MB</text>
+    <text x="370" y="148" class="body" font-size="12" text-anchor="end">这版稿子周五前要定</text>
+    <text x="370" y="162" class="mono faint ui" font-size="9.5" text-anchor="end">已送达 2 台 · 14:24</text>
+
+    <!-- 声呐环：圆心在输入区下方 -->
+    <g fill="none" stroke="{{accent-line}}">
+      <circle cx="195" cy="760" r="250" opacity=".45"/>
+      <circle cx="195" cy="760" r="360" opacity=".28"/>
+      <circle cx="195" cy="760" r="470" opacity=".16"/>
+    </g>
+
+    <text x="176" y="212" class="mono faint ui" font-size="9.5" text-anchor="middle">点按球体即发送 · 拖动空白平移画布</text>
+
+    <!-- A · 客厅 Windows：传输中 -->
+    <g class="bob b1">
+      <circle cx="195" cy="318" r="52" fill="none" stroke="{{line-soft}}" stroke-width="2" stroke-dasharray="222 105" transform="rotate(-90 195 318)"/>
+      <circle cx="195" cy="318" r="52" fill="{{accent}}" filter="url(#mGlow)" opacity=".13"/>
+      <g class="spin">
+        <circle cx="195" cy="318" r="52" fill="none" stroke="{{accent}}" stroke-width="2.8" stroke-linecap="round" stroke-dasharray="221 105" transform="rotate(-90 195 318)"/>
+      </g>
+      <circle cx="195" cy="318" r="43" fill="url(#mOrbHot)" stroke="{{line}}" stroke-width="1.1" filter="url(#mOrbShadow)"/>
+      <ellipse cx="185" cy="304" rx="13" ry="7" transform="rotate(-28 185 272)" fill="url(#mSpec)"/>
+      <use href="#i-monitor" x="186" y="307" width="19" height="19" color="{{accent}}"/>
+      <text x="195" y="337" class="mono ui" font-size="10" font-weight="600" fill="{{accent-ink}}" text-anchor="middle">68%</text>
+    </g>
+    <text x="195" y="384" class="ink" font-size="12" font-weight="600" text-anchor="middle">客厅 Windows</text>
+    <text x="195" y="399" class="mono faint ui" font-size="9.5" text-anchor="middle">18.2 MB/s · 点按暂停</text>
+
+    <!-- B · MacBook Pro：改过内容，只补发差异 -->
+    <g class="bob b2">
+      <circle cx="84" cy="406" r="40" fill="none" stroke="{{delta-line}}" stroke-width="1.6" stroke-dasharray="3 5"/>
+      <circle cx="84" cy="406" r="33" fill="url(#mOrb)" stroke="{{line}}" stroke-width="1.1" filter="url(#mOrbShadow)"/>
+      <ellipse cx="75" cy="394" rx="10" ry="5.5" transform="rotate(-28 75 362)" fill="url(#mSpec)"/>
+      <use href="#i-laptop" x="76" y="398" width="16" height="16" color="{{delta}}"/>
+    </g>
+    <text x="84" y="460" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">MacBook Pro</text>
+    <text x="84" y="474" class="mono ui" font-size="9" font-weight="600" fill="{{delta-ink}}" text-anchor="middle">补发 +6 字</text>
+
+    <!-- C · iPhone 15：已同步 -->
+    <g class="bob b3">
+      <circle cx="308" cy="414" r="34" fill="none" stroke="{{success}}" stroke-width="1.6" opacity=".7"/>
+      <circle cx="308" cy="414" r="28" fill="url(#mOrb)" stroke="{{line}}" stroke-width="1.1" filter="url(#mOrbShadow)"/>
+      <ellipse cx="300" cy="436" rx="8" ry="4.5" transform="rotate(-28 300 372)" fill="url(#mSpec)"/>
+      <use href="#i-phone" x="301" y="407" width="14" height="14" color="{{muted}}"/>
+      <circle cx="333" cy="436" r="7" fill="{{success}}"/>
+      <use href="#i-check" x="329.5" y="432.5" width="7" height="7" color="{{on-accent}}"/>
+    </g>
+    <text x="308" y="462" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">iPhone 15</text>
+    <text x="308" y="476" class="mono faint ui" font-size="9" text-anchor="middle">已同步</text>
+
+    <!-- D · 书房 Mac mini：已暂停 -->
+    <g class="bob b4">
+      <circle cx="195" cy="528" r="27" fill="none" stroke="{{flag}}" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="41 129" transform="rotate(-90 195 492)"/>
+      <circle cx="195" cy="528" r="21" fill="{{sunken}}" stroke="{{line-soft}}" stroke-width="1"/>
+      <use href="#i-laptop" x="189" y="522" width="12" height="12" color="{{flag}}"/>
+    </g>
+    <text x="195" y="571" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">书房 Mac mini</text>
+    <text x="195" y="585" class="mono faint ui" font-size="9" text-anchor="middle">已暂停 24% · 点按继续</text>
+
+    <!-- E · 添加设备：配对后新球直接落在这块画布 -->
+    <g class="bob b5">
+      <circle cx="310" cy="528" r="30" fill="none" stroke="{{dropzone}}" stroke-width="1.3" stroke-dasharray="4 5"/>
+      <circle cx="310" cy="528" r="24" fill="{{surface}}" stroke="{{line-soft}}" stroke-width="1"/>
+      <path d="M310 518v20M300 528h20" stroke="{{accent-icon}}" stroke-width="1.8" stroke-linecap="round"/>
+    </g>
+    <text x="310" y="574" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">添加设备</text>
+    <text x="310" y="588" class="mono faint ui" font-size="9" text-anchor="middle">配对后落在这</text>
+
+    <!-- 无限画布：被屏幕边缘裁掉的球 -->
+    <g opacity=".5">
+      <circle cx="14" cy="300" r="22" fill="url(#mOrb)" stroke="{{line}}" stroke-width="1"/>
+      <use href="#i-tablet" x="7" y="293" width="12" height="12" color="{{muted}}"/>
+    </g>
+    <g opacity=".5">
+      <circle cx="382" cy="228" r="20" fill="url(#mOrb)" stroke="{{line}}" stroke-width="1"/>
+      <use href="#i-monitor" x="376" y="222" width="12" height="12" color="{{muted}}"/>
+    </g>
+
+    <!-- 小地图：当前视口 + 窗外设备 -->
+    <rect x="306" y="224" width="56" height="38" rx="8" fill="{{sunken}}" stroke="{{line}}" stroke-width="1"/>
+    <rect x="316" y="233" width="24" height="17" rx="3" fill="none" stroke="{{accent}}" stroke-width="1.1"/>
+    <circle cx="324" cy="237" r="1.8" fill="{{accent}}"/>
+    <circle cx="337" cy="231" r="1.8" fill="{{delta-fill}}"/>
+    <circle cx="346" cy="250" r="1.8" fill="{{success}}"/>
+    <circle cx="350" cy="235" r="1.8" fill="{{faint}}"/>
+    <text x="362" y="240" class="mono faint ui" font-size="8.5" text-anchor="end">2/6</text>
+  </g>
+
+  <!-- 输入区：固定在底部，无发送键，不标差异 -->
+  <g filter="url(#mComposer)">
+    <rect x="16" y="618" width="358" height="60" rx="18" fill="{{surface}}" stroke="{{accent-line}}" stroke-width="1.2"/>
+  </g>
+  <rect x="28" y="630" width="34" height="34" rx="11" fill="{{idle}}"/>
+  <use href="#i-plus" x="35" y="637" width="20" height="20" color="{{muted}}"/>
+  <text x="76" y="652" class="ink" font-size="13">这版稿子周五前要定，下午确认。</text>
+  <rect x="262" y="643" width="1.6" height="16" rx=".8" fill="{{accent}}" class="caret"/>
+  <rect x="262" y="643" width="1.6" height="16" rx=".8" fill="{{accent}}" filter="url(#mGlow)" opacity=".7"/>
+  <use href="#i-tray" x="336" y="641" width="15" height="15" color="{{muted}}"/>
+
+  <text x="195" y="700" class="mono faint ui" font-size="9.5" text-anchor="middle">清空输入即收起球体，回到会话</text>
+  <rect x="135" y="828" width="120" height="5" rx="2.5" fill="{{ink}}" opacity=".85"/>
+</svg>

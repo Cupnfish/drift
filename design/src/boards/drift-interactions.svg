@@ -1,0 +1,254 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Drift 交互规则（设备球体）</title>
+  <desc id="desc">六张交互规则卡片：输入与暂存、单击球体发送、球体上的五种状态、添加与配对新设备、无限画布平移缩放、接收与失败。每张卡片含一个状态示意与对应的处理规则，全部围绕「输入框有内容才浮出设备球体」这一模型。</desc>
+  <defs>
+    <radialGradient id="ibOrb" cx=".34" cy=".26" r=".9">
+      <stop offset="0" stop-color="{{surface}}"/>
+      <stop offset=".56" stop-color="{{surface}}"/>
+      <stop offset="1" stop-color="{{sunken}}"/>
+    </radialGradient>
+    <radialGradient id="ibSpec" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="{{on-accent}}" stop-opacity=".7"/>
+      <stop offset="1" stop-color="{{on-accent}}" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ibBg" x1="0" y1="0" x2="1200" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="{{sunken-alt}}"/>
+      <stop offset="1" stop-color="#EEF1F8"/>
+    </linearGradient>
+    <filter id="card" x="-10%" y="-10%" width="120%" height="125%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="{{shadow}}" flood-opacity="0.06"/>
+    </filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="3" stdDeviation="7" flood-color="{{shadow}}" flood-opacity="0.10"/>
+    </filter>
+    <filter id="ibGlow" x="-120%" y="-120%" width="340%" height="340%"><feGaussianBlur stdDeviation="4"/></filter>
+    <!-- @icons -->
+    <style>
+      text { font-family: Inter, "SF Pro Display", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .ink { fill: {{ink}}; }
+      .muted { fill: {{muted}}; }
+      .faint { fill: {{faint}}; }
+      .rule { font-size: 10.5px; fill: {{muted}}; }
+      .mono { font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Mono", Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace; letter-spacing: .03em; }
+      .ui { font-variant-numeric: tabular-nums; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#ibBg)"/>
+  <text x="48" y="66" class="ink" font-size="25" font-weight="650" letter-spacing="-.03em">Drift · 交互规则</text>
+  <text x="48" y="92" class="muted" font-size="12">输入即浮出设备球体；单击发送，状态画在环上</text>
+  <text x="1152" y="66" class="faint" font-size="11" text-anchor="end">v1.5 · 2026.11</text>
+
+  <!-- ══ 1 · 输入与暂存 ══ -->
+  <g transform="translate(48 128)">
+    <rect width="352" height="356" rx="22" fill="{{surface}}" stroke="{{line}}" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="{{accent-wash}}"/>
+    <text x="32" y="36" fill="{{accent-ink}}" font-size="10" font-weight="700" text-anchor="middle">1</text>
+    <text x="52" y="37" class="ink" font-size="14" font-weight="650">输入与暂存</text>
+    <rect x="20" y="56" width="312" height="140" rx="16" fill="{{sunken}}"/>
+
+    <rect x="20" y="96" width="312" height="46" rx="14" fill="{{surface}}" stroke="{{accent}}"/>
+    <rect x="32" y="104" width="24" height="24" rx="8" fill="{{idle}}"/>
+    <use href="#i-plus" x="38" y="110" width="12" height="12" color="{{muted}}"/>
+    <text x="66" y="119" class="ink" font-size="10">会议纪要已更新，周五评审</text>
+    <rect x="204" y="111" width="1.4" height="14" rx=".7" fill="{{accent}}"/>
+    <use href="#i-tray" x="306" y="110" width="13" height="13" color="{{muted}}"/>
+
+    <text x="176" y="168" class="mono faint ui" font-size="9" text-anchor="middle">输入框只显示正文 · 不标记差异</text>
+
+    <circle cx="24" cy="218" r="2" fill="{{bullet}}"/>
+    <text x="36" y="222" class="rule">没有发送键；有内容才浮出球体，清空即收起</text>
+    <circle cx="24" cy="242" r="2" fill="{{bullet}}"/>
+    <text x="36" y="246" class="rule">Ctrl / Cmd + V 任意位置粘贴，先落进输入区</text>
+    <circle cx="24" cy="266" r="2" fill="{{bullet}}"/>
+    <text x="36" y="270" class="rule">发送后内容保留，可继续改字或再点别的球</text>
+    <circle cx="24" cy="290" r="2" fill="{{bullet}}"/>
+    <text x="36" y="294" class="rule">超过 3 行自动增高，120px 后内部滚动</text>
+    <circle cx="24" cy="314" r="2" fill="{{bullet}}"/>
+    <text x="36" y="318" class="rule">输入框内永远不做 diff 高亮或字数徽章</text>
+  </g>
+
+  <!-- ══ 2 · 单击球体发送 ══ -->
+  <g transform="translate(424 128)">
+    <rect width="352" height="356" rx="22" fill="{{surface}}" stroke="{{line}}" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="{{accent-wash}}"/>
+    <text x="32" y="36" fill="{{accent-ink}}" font-size="10" font-weight="700" text-anchor="middle">2</text>
+    <text x="52" y="37" class="ink" font-size="14" font-weight="650">单击球体发送</text>
+    <rect x="20" y="56" width="312" height="140" rx="16" fill="{{sunken}}"/>
+
+    <circle cx="76" cy="120" r="26" fill="{{accent-wash}}" stroke="{{accent}}" stroke-width="1.4"/>
+    <use href="#i-monitor" x="65" y="109" width="22" height="22" color="{{accent-icon}}"/>
+    <path d="M76 120l44-22" stroke="{{accent}}" stroke-width="1.3" stroke-linecap="round" opacity=".45"/>
+    <circle cx="176" cy="120" r="26" fill="url(#ibOrb)" stroke="{{line}}" stroke-width="1.1" filter="url(#soft)"/>
+    <ellipse cx="168" cy="110" rx="8" ry="4.5" transform="rotate(-28 168 110)" fill="url(#ibSpec)"/>
+    <use href="#i-phone" x="167" y="111" width="18" height="18" color="{{muted}}"/>
+    <circle cx="276" cy="120" r="26" fill="url(#ibOrb)" stroke="{{success}}" stroke-width="1.6"/>
+    <use href="#i-tablet" x="267" y="111" width="18" height="18" color="{{muted}}"/>
+    <circle cx="294" cy="138" r="7" fill="{{success}}"/>
+    <use href="#i-check" x="290.5" y="134.5" width="7" height="7" color="{{on-accent}}"/>
+
+    <text x="76" y="176" class="mono faint ui" font-size="9" text-anchor="middle">点按</text>
+    <text x="176" y="176" class="mono faint ui" font-size="9" text-anchor="middle">其余不动</text>
+    <text x="276" y="176" class="mono faint ui" font-size="9" text-anchor="middle">环变绿</text>
+
+    <circle cx="24" cy="218" r="2" fill="{{bullet}}"/>
+    <text x="36" y="222" class="rule">单击任意球体立刻发送给那一台，不做划过多选</text>
+    <circle cx="24" cy="242" r="2" fill="{{bullet}}"/>
+    <text x="36" y="246" class="rule">要发多台，就连续点几个球；每台各自独立记录</text>
+    <circle cx="24" cy="266" r="2" fill="{{bullet}}"/>
+    <text x="36" y="270" class="rule">发送后输入内容不变，球体进入已发送状态</text>
+    <circle cx="24" cy="290" r="2" fill="{{bullet}}"/>
+    <text x="36" y="294" class="rule">点按只作用于球体本身，不弹出确认或二级菜单</text>
+    <circle cx="24" cy="314" r="2" fill="{{bullet}}"/>
+    <text x="36" y="318" class="rule">传输中的球再点一次即暂停，不取消已传部分</text>
+  </g>
+
+  <!-- ══ 3 · 球体上的状态 ══ -->
+  <g transform="translate(800 128)">
+    <rect width="352" height="356" rx="22" fill="{{surface}}" stroke="{{line}}" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="{{accent-wash}}"/>
+    <text x="32" y="36" fill="{{accent-ink}}" font-size="10" font-weight="700" text-anchor="middle">3</text>
+    <text x="52" y="37" class="ink" font-size="14" font-weight="650">环即状态</text>
+    <rect x="20" y="56" width="312" height="140" rx="16" fill="{{sunken}}"/>
+
+    <!-- 传输中 -->
+    <circle cx="96" cy="102" r="30" fill="none" stroke="{{line-soft}}" stroke-width="1.8" stroke-dasharray="132 57" transform="rotate(-90 96 102)"/>
+    <circle cx="96" cy="102" r="30" fill="none" stroke="{{accent}}" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="131 57" transform="rotate(-90 96 102)"/>
+    <circle cx="96" cy="102" r="24" fill="url(#ibOrb)" stroke="{{line}}" stroke-width="1"/>
+    <text x="96" y="105" class="mono ui" font-size="9" font-weight="600" fill="{{accent-ink}}" text-anchor="middle">68%</text>
+    <text x="96" y="148" class="faint" font-size="9.5" text-anchor="middle">传输中</text>
+
+    <!-- 内容改过 -->
+    <circle cx="196" cy="102" r="30" fill="none" stroke="{{delta-line}}" stroke-width="1.8" stroke-dasharray="4 6"/>
+    <circle cx="196" cy="102" r="24" fill="url(#ibOrb)" stroke="{{line}}" stroke-width="1"/>
+    <use href="#i-refresh" x="188" y="94" width="16" height="16" color="{{delta}}"/>
+    <text x="196" y="148" class="faint" font-size="9.5" text-anchor="middle">可补发</text>
+
+    <!-- 已同步 -->
+    <circle cx="296" cy="102" r="30" fill="none" stroke="{{success}}" stroke-width="1.8" opacity=".75"/>
+    <circle cx="296" cy="102" r="24" fill="url(#ibOrb)" stroke="{{line}}" stroke-width="1"/>
+    <circle cx="316" cy="122" r="7" fill="{{success}}"/>
+    <use href="#i-check" x="312.5" y="118.5" width="7" height="7" color="{{on-accent}}"/>
+    <text x="296" y="148" class="faint" font-size="9.5" text-anchor="middle">已同步</text>
+    <path d="M52 168h268" stroke="{{line-soft}}"/>
+
+    <circle cx="24" cy="184" r="2" fill="{{bullet}}"/>
+    <text x="36" y="188" class="rule">待发无环；传输紫、可补发橙虚线、已同步绿、暂停灰部分环</text>
+    <circle cx="24" cy="206" r="2" fill="{{bullet}}"/>
+    <text x="36" y="210" class="rule">颜色必须配文字或勾选，不能只靠颜色区分</text>
+    <circle cx="24" cy="228" r="2" fill="{{bullet}}"/>
+    <text x="36" y="232" class="rule">增量差异写在那一台球体的下方，不搬到输入框</text>
+    <circle cx="24" cy="256" r="2" fill="{{bullet}}"/>
+    <text x="36" y="260" class="rule">改字后，之前发过的球体自动从绿环切成橙虚线</text>
+    <circle cx="24" cy="280" r="2" fill="{{bullet}}"/>
+    <text x="36" y="284" class="rule">再点一次只补发差异（文本按段、文件按哈希）</text>
+    <circle cx="24" cy="304" r="2" fill="{{bullet}}"/>
+    <text x="36" y="308" class="rule">从未发过的球体保持无环，点击发送全部内容</text>
+    <circle cx="24" cy="328" r="2" fill="{{bullet}}"/>
+    <text x="36" y="332" class="rule">环的粗细与球体大小不随状态变化，避免误读为进度</text>
+  </g>
+
+  <!-- ══ 4 · 添加与配对新设备 ══ -->
+  <g transform="translate(48 508)">
+    <rect width="352" height="356" rx="22" fill="{{surface}}" stroke="{{line}}" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="{{accent-wash}}"/>
+    <text x="32" y="36" fill="{{accent-ink}}" font-size="10" font-weight="700" text-anchor="middle">4</text>
+    <text x="52" y="37" class="ink" font-size="14" font-weight="650">添加设备</text>
+    <rect x="20" y="56" width="312" height="140" rx="16" fill="{{sunken}}"/>
+
+    <circle cx="86" cy="118" r="32" fill="none" stroke="{{dropzone}}" stroke-width="1.3" stroke-dasharray="4 5"/>
+    <circle cx="86" cy="118" r="25" fill="{{surface}}" stroke="{{line-soft}}" stroke-width="1"/>
+    <path d="M86 107v22M75 118h22" stroke="{{accent-icon}}" stroke-width="1.8" stroke-linecap="round"/>
+    <text x="86" y="170" class="faint" font-size="9.5" text-anchor="middle">虚线加号球</text>
+
+    <path d="M136 118h40" stroke="{{line-strong}}" stroke-width="1.4" stroke-linecap="round" marker-end=""/>
+    <path d="m170 113 6 5-6 5" stroke="{{line-strong}}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+    <circle cx="232" cy="118" r="26" fill="{{surface}}" stroke="{{line}}" stroke-width="1.2"/>
+    <text x="232" y="122" class="mono ink ui" font-size="10" font-weight="700" text-anchor="middle">4821</text>
+    <text x="232" y="170" class="faint" font-size="9.5" text-anchor="middle">两端显示同一号码</text>
+
+    <circle cx="298" cy="90" r="6" fill="{{success}}"/>
+    <path d="M292 118h12M292 130h12" stroke="{{line-strong}}" stroke-width="1.3"/>
+
+    <circle cx="24" cy="218" r="2" fill="{{bullet}}"/>
+    <text x="36" y="222" class="rule">加号球常驻画布，点开就地配对，不跳设置页</text>
+    <circle cx="24" cy="242" r="2" fill="{{bullet}}"/>
+    <text x="36" y="246" class="rule">配对成功后新球从加号球位置展开，直接可发</text>
+    <circle cx="24" cy="266" r="2" fill="{{bullet}}"/>
+    <text x="36" y="270" class="rule">默认用设备型号作名字，配对时广播给对方</text>
+    <circle cx="24" cy="290" r="2" fill="{{bullet}}"/>
+    <text x="36" y="294" class="rule">自己改名随时可改；别人的名字只改本地显示</text>
+    <circle cx="24" cy="314" r="2" fill="{{bullet}}"/>
+    <text x="36" y="318" class="rule">名字与型号一致时列表只显示一个（见 drift-devices）</text>
+  </g>
+
+  <!-- ══ 5 · 无限画布 ══ -->
+  <g transform="translate(424 508)">
+    <rect width="352" height="356" rx="22" fill="{{surface}}" stroke="{{line}}" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="{{accent-wash}}"/>
+    <text x="32" y="36" fill="{{accent-ink}}" font-size="10" font-weight="700" text-anchor="middle">5</text>
+    <text x="52" y="37" class="ink" font-size="14" font-weight="650">拖动视角</text>
+    <rect x="20" y="56" width="312" height="140" rx="16" fill="{{sunken}}"/>
+
+    <rect x="20" y="70" width="220" height="112" rx="12" fill="none" stroke="{{line}}" stroke-dasharray="3 4"/>
+    <g opacity=".45">
+      <circle cx="30" cy="100" r="18" fill="url(#ibOrb)" stroke="{{line}}"/>
+      <circle cx="52" cy="166" r="16" fill="url(#ibOrb)" stroke="{{line}}"/>
+    </g>
+    <circle cx="120" cy="126" r="22" fill="url(#ibOrb)" stroke="{{line}}" stroke-width="1.1" filter="url(#soft)"/>
+    <circle cx="186" cy="100" r="18" fill="url(#ibOrb)" stroke="{{line}}" stroke-width="1"/>
+    <path d="M196 148l22-10" stroke="{{accent}}" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="3 3"/>
+
+    <rect x="256" y="70" width="58" height="40" rx="8" fill="{{surface}}" stroke="{{line}}"/>
+    <rect x="264" y="79" width="26" height="18" rx="3" fill="none" stroke="{{accent}}" stroke-width="1.1"/>
+    <circle cx="272" cy="83" r="1.8" fill="{{accent}}"/>
+    <circle cx="286" cy="94" r="1.8" fill="{{faint}}"/>
+    <circle cx="296" cy="79" r="1.8" fill="{{faint}}"/>
+    <text x="290" y="124" class="faint" font-size="9.5" text-anchor="middle">小地图</text>
+
+    <circle cx="24" cy="218" r="2" fill="{{bullet}}"/>
+    <text x="36" y="222" class="rule">拖空白处平移画布，滚轮或双指缩放</text>
+    <circle cx="24" cy="242" r="2" fill="{{bullet}}"/>
+    <text x="36" y="246" class="rule">被窗口裁掉的球体露在边缘，提示还有更多</text>
+    <circle cx="24" cy="266" r="2" fill="{{bullet}}"/>
+    <text x="36" y="270" class="rule">右上小地图标出当前视口与窗外设备数量</text>
+    <circle cx="24" cy="290" r="2" fill="{{bullet}}"/>
+    <text x="36" y="294" class="rule">拖动与点按不冲突：移动超过 4px 才算拖拽</text>
+    <circle cx="24" cy="314" r="2" fill="{{bullet}}"/>
+    <text x="36" y="318" class="rule">视角记住上一次位置，收起再浮出不跳回原点</text>
+  </g>
+
+  <!-- ══ 6 · 接收与失败 ══ -->
+  <g transform="translate(800 508)">
+    <rect width="352" height="356" rx="22" fill="{{surface}}" stroke="{{line}}" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="{{accent-wash}}"/>
+    <text x="32" y="36" fill="{{accent-ink}}" font-size="10" font-weight="700" text-anchor="middle">6</text>
+    <text x="52" y="37" class="ink" font-size="14" font-weight="650">接收与失败</text>
+    <rect x="20" y="56" width="312" height="140" rx="16" fill="{{sunken}}"/>
+
+    <rect x="20" y="72" width="312" height="38" rx="11" fill="{{surface}}" stroke="{{line}}"/>
+    <use href="#i-check" x="34" y="85" width="13" height="13" color="{{success}}"/>
+    <text x="56" y="95" class="ink" font-size="9.5" font-weight="600">已送达 MacBook Pro、iPhone 15</text>
+    <text x="318" y="95" class="mono faint ui" font-size="8.5" text-anchor="end">14:24</text>
+
+    <rect x="20" y="118" width="312" height="38" rx="11" fill="{{danger-wash}}" stroke="{{danger-line}}"/>
+    <use href="#i-warn" x="34" y="131" width="13" height="13" color="{{danger}}"/>
+    <text x="56" y="141" fill="{{danger-ink}}" font-size="9.5" font-weight="600">iPad Air · 连接中断</text>
+    <text x="318" y="141" fill="{{danger-fill}}" font-size="9" font-weight="600" text-anchor="end">重试</text>
+
+    <circle cx="24" cy="218" r="2" fill="{{bullet}}"/>
+    <text x="36" y="222" class="rule">每条结果在会话里写一行，不另开弹窗</text>
+    <circle cx="24" cy="242" r="2" fill="{{bullet}}"/>
+    <text x="36" y="246" class="rule">单台失败只标那一台，重试不影响其他设备</text>
+    <circle cx="24" cy="266" r="2" fill="{{bullet}}"/>
+    <text x="36" y="270" class="rule">对方拒收则告诉对方「已拒收」，不自动重试</text>
+    <circle cx="24" cy="290" r="2" fill="{{bullet}}"/>
+    <text x="36" y="294" class="rule">断线自动重连，30 秒后转为等待重试</text>
+    <circle cx="24" cy="314" r="2" fill="{{bullet}}"/>
+    <text x="36" y="318" class="rule">完成：环收束成绿，保留「已送达 N 台」</text>
+  </g>
+
+  <text x="48" y="884" class="faint" font-size="10">所有记录仅保存在本机 · 传输走局域网，不经过服务器</text>
+  <text x="1152" y="884" class="faint" font-size="10" text-anchor="end">配套：drift-main-desktop.svg / drift-main-mobile.svg / drift-devices.svg</text>
+</svg>

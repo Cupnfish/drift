@@ -1,0 +1,287 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1120" viewBox="0 0 1200 1120" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Drift 动效规范</title>
+  <desc id="desc">动效规范板：三条基本原则、四档时长令牌、三条缓动曲线，以及球体浮出、单击发送、环状态切换、添加设备、平移缩放、减少动态六个关键场景的逐帧时长与属性说明。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="1120" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#101419"/>
+      <stop offset="1" stop-color="#101419"/>
+    </linearGradient>
+    <radialGradient id="ibOrb" cx=".34" cy=".26" r=".9">
+      <stop offset="0" stop-color="#171B24"/>
+      <stop offset=".56" stop-color="#171B24"/>
+      <stop offset="1" stop-color="#1C212C"/>
+    </radialGradient>
+    <radialGradient id="ibSpec" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity=".7"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="card" x="-10%" y="-10%" width="120%" height="122%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#000000" flood-opacity="0.06"/>
+    </filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="170%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.08"/>
+    </filter>
+        <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3 9.8 14.2M21 3l-7.2 18-4-6.8L3 10.2 21 3Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M2.5 20h19M8 20l.7-4h6.6l.7 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M10 5h4M11 18.5h2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 2.8h8l4 4V21H6V2.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 3v4h4M9 12h6M9 16h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6.5h7l2-2h9v15H3v-13Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M3 9h18" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20h4l10.5-10.5a2.4 2.4 0 0 0-3.4-3.4L4.6 16.6 4 20Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m13.6 7.4 3 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/></symbol>
+    <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.6a9.4 9.4 0 0 1 9.4 9.4M12 6.2a5.8 5.8 0 0 1 5.8 5.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M16 8V4H4v12h4" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v11m0 0 4-4m-4 4-4-4M4 19h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 6h16M9 6V3h6v3M6.5 6l1 15h9l1-15M10 10v7M14 10v7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-tray" viewBox="0 0 24 24"><path d="M12 3v9m0 0 3.4-3.4M12 12 8.6 8.6M4 15v5h16v-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cursor" viewBox="0 0 24 24"><path d="M5.2 3.2 19 11.8l-6.1 1.4-2.7 6.2L5.2 3.2Z" fill="currentColor" stroke="#FFFFFF" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+    <symbol id="i-tablet" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="2.6" stroke="currentColor" stroke-width="1.7"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.2 19 6v6c0 4.4-3 7.4-7 9-4-1.6-7-4.6-7-9V6l7-2.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M9.5 14.5 14.5 9.5M8.5 10.5 6.2 12.8a3.6 3.6 0 0 0 5 5l2.3-2.3M15.5 13.5l2.3-2.3a3.6 3.6 0 0 0-5-5l-2.3 2.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-unlink" viewBox="0 0 24 24"><path d="M8.5 10.5 6.2 12.8a3.6 3.6 0 0 0 5 5l2.3-2.3M15.5 13.5l2.3-2.3a3.6 3.6 0 0 0-5-5l-2.3 2.3M4 4l16 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3.5 21 20H3L12 3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 9v5M12 17.2h.1" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/> <path d="M20 4.2v4.6h-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.8 12S6.5 5.8 12 5.8 21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/> <circle cx="12" cy="12" r="2.8" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M14 7l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <style>
+      text { font-family: Inter, "SF Pro Display", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .ink { fill: #F1F4FA; }
+      .muted { fill: #A6AEBF; }
+      .faint { fill: #8B93A6; }
+      .mono { font-family: "SF Mono", "JetBrains Mono", Menlo, monospace; }
+      .t2 { font-size: 9.5px; fill: #8B93A6; }
+      .spec { font-size: 10px; fill: #A6AEBF; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="1120" fill="url(#bg)"/>
+  <text x="48" y="66" class="ink" font-size="25" font-weight="750" letter-spacing="-.03em">Drift · 动效规范</text>
+  <text x="48" y="92" class="muted" font-size="12">统一的时长、缓动与六个关键场景；动效只解释状态，不表演</text>
+  <text x="1152" y="66" class="faint" font-size="11" text-anchor="end">v1.5 · 2026.11</text>
+  <!-- Principles -->
+  <rect x="48" y="112" width="1104" height="58" rx="16" fill="#171B24" stroke="#333A4B"/>
+  <rect x="76" y="132" width="3" height="18" rx="1.5" fill="#8E86FF"/>
+  <text x="90" y="138" class="ink" font-size="11" font-weight="650">只动 transform 与 opacity</text>
+  <text x="90" y="155" class="faint" font-size="9.5">例外仅虚线环与推移惯性，不碰布局</text>
+  <path d="M404 126v30" stroke="#2B3040"/>
+  <rect x="436" y="132" width="3" height="18" rx="1.5" fill="#8E86FF"/>
+  <text x="450" y="138" class="ink" font-size="11" font-weight="650">时长上限 320ms</text>
+  <text x="450" y="155" class="faint" font-size="9.5">更远的距离靠缓动；循环进度与高亮不计入</text>
+  <path d="M764 126v30" stroke="#2B3040"/>
+  <rect x="796" y="132" width="3" height="18" rx="1.5" fill="#8E86FF"/>
+  <text x="810" y="138" class="ink" font-size="11" font-weight="650">减少动态 = 全部淡入</text>
+  <text x="810" y="155" class="faint" font-size="9.5">prefers-reduced-motion · 位移降为 1ms</text>
+  <!-- Duration tokens -->
+  <text x="48" y="204" class="ink" font-size="12" font-weight="700">时长</text>
+  <text x="88" y="204" class="faint" font-size="9.5">四档够用，不再增加</text>
+
+  <text x="48" y="238" class="ink mono" font-size="12" font-weight="700">120ms</text>
+  <text x="104" y="238" class="muted" font-size="10.5">微反馈</text>
+  <text x="300" y="238" class="faint" font-size="10">按下 · 悬停 · 勾选描边</text>
+  <rect x="48" y="248" width="220" height="5" rx="2.5" fill="#262C39"/>
+  <rect x="48" y="248" width="82" height="5" rx="2.5" fill="#8E86FF"/>
+
+  <text x="48" y="286" class="ink mono" font-size="12" font-weight="700">180ms</text>
+  <text x="104" y="286" class="muted" font-size="10.5">控件</text>
+  <text x="300" y="286" class="faint" font-size="10">球体浮出 · 环色切换</text>
+  <rect x="48" y="296" width="220" height="5" rx="2.5" fill="#262C39"/>
+  <rect x="48" y="296" width="124" height="5" rx="2.5" fill="#8E86FF"/>
+
+  <text x="48" y="334" class="ink mono" font-size="12" font-weight="700">240ms</text>
+  <text x="104" y="334" class="muted" font-size="10.5">面板</text>
+  <text x="300" y="334" class="faint" font-size="10">补发 · 新球展开</text>
+  <rect x="48" y="344" width="220" height="5" rx="2.5" fill="#262C39"/>
+  <rect x="48" y="344" width="165" height="5" rx="2.5" fill="#8E86FF"/>
+
+  <text x="48" y="382" class="ink mono" font-size="12" font-weight="700">320ms</text>
+  <text x="104" y="382" class="muted" font-size="10.5">页面</text>
+  <text x="300" y="382" class="faint" font-size="10">配对成功 · 首屏进入</text>
+  <rect x="48" y="392" width="220" height="5" rx="2.5" fill="#262C39"/>
+  <rect x="48" y="392" width="220" height="5" rx="2.5" fill="#8E86FF"/>
+  <!-- Easing -->
+  <text x="600" y="204" class="ink" font-size="12" font-weight="700">缓动</text>
+  <text x="640" y="204" class="faint" font-size="9.5">三条曲线覆盖全部场景</text>
+
+  <rect x="600" y="224" width="176" height="220" rx="18" fill="#171B24" stroke="#333A4B"/>
+  <text x="616" y="252" class="ink" font-size="11" font-weight="700">标准</text>
+  <rect x="616" y="266" width="120" height="120" fill="none" stroke="#262C39"/>
+  <path d="M676 266v120M616 326h120" stroke="#202634" stroke-dasharray="2 3"/>
+  <path d="M616 386H736M616 386V266" stroke="#333A4B"/>
+  <path d="M616 386C640 386 616 266 736 266" stroke="#8E86FF" stroke-width="2"/>
+  <circle cx="616" cy="386" r="2.5" fill="#4A4F86"/>
+  <circle cx="736" cy="266" r="3" fill="#8E86FF"/>
+  <text x="616" y="404" class="mono" font-size="9" fill="#A6AEBF">cubic-bezier(.2,0,0,1)</text>
+  <text x="616" y="420" class="faint" font-size="9">状态切换 · 布局变化</text>
+
+  <rect x="788" y="224" width="176" height="220" rx="18" fill="#171B24" stroke="#333A4B"/>
+  <text x="804" y="252" class="ink" font-size="11" font-weight="700">进场</text>
+  <rect x="804" y="266" width="120" height="120" fill="none" stroke="#262C39"/>
+  <path d="M864 266v120M804 326h120" stroke="#202634" stroke-dasharray="2 3"/>
+  <path d="M804 386H924M804 386V266" stroke="#333A4B"/>
+  <path d="M804 386C810 302 816 266 924 266" stroke="#8E86FF" stroke-width="2"/>
+  <circle cx="804" cy="386" r="2.5" fill="#4A4F86"/>
+  <circle cx="924" cy="266" r="3" fill="#8E86FF"/>
+  <text x="804" y="404" class="mono" font-size="9" fill="#A6AEBF">cubic-bezier(.05,.7,.1,1)</text>
+  <text x="804" y="420" class="faint" font-size="9">球体 · 环 · 新记录</text>
+
+  <rect x="976" y="224" width="176" height="220" rx="18" fill="#171B24" stroke="#333A4B"/>
+  <text x="992" y="252" class="ink" font-size="11" font-weight="700">退场</text>
+  <rect x="992" y="266" width="120" height="120" fill="none" stroke="#262C39"/>
+  <path d="M1052 266v120M992 326h120" stroke="#202634" stroke-dasharray="2 3"/>
+  <path d="M992 386H1112M992 386V266" stroke="#333A4B"/>
+  <path d="M992 386C1028 386 1088 368 1112 266" stroke="#8E86FF" stroke-width="2"/>
+  <circle cx="992" cy="386" r="2.5" fill="#4A4F86"/>
+  <circle cx="1112" cy="266" r="3" fill="#8E86FF"/>
+  <text x="992" y="404" class="mono" font-size="9" fill="#A6AEBF">cubic-bezier(.3,0,.8,.15)</text>
+  <text x="992" y="420" class="faint" font-size="9">关闭 · 删除 · 收起</text>
+  <!-- Scenarios -->
+  <text x="48" y="490" class="ink" font-size="12" font-weight="700">关键场景</text>
+  <text x="112" y="490" class="faint" font-size="9.5">每张卡为起始 / 中段 / 结束三帧，时间以真实交互起点计</text>
+
+  <!-- 1 球体随输入浮出 -->
+  <g transform="translate(48 514)">
+    <rect width="352" height="270" rx="20" fill="#171B24" stroke="#333A4B" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="#2A3152"/>
+    <text x="32" y="36" fill="#B0A8FF" font-size="10" font-weight="700" text-anchor="middle">1</text>
+    <text x="52" y="37" class="ink" font-size="13.5" font-weight="650">球体随输入浮出</text>
+    <rect x="20" y="56" width="100" height="78" rx="10" fill="#1C212C"/>
+    <rect x="126" y="56" width="100" height="78" rx="10" fill="#1C212C"/>
+    <rect x="232" y="56" width="100" height="78" rx="10" fill="#1C212C"/>
+    <circle cx="70" cy="112" r="22" fill="url(#ibOrb)" stroke="#333A4B" opacity=".22"/>
+    <circle cx="176" cy="100" r="24" fill="url(#ibOrb)" stroke="#333A4B" opacity=".62"/>
+    <circle cx="282" cy="86" r="26" fill="url(#ibOrb)" stroke="#333A4B" filter="url(#soft)"/>
+    <circle cx="282" cy="86" r="33" fill="none" stroke="#3D4270" opacity=".6"/>
+    <text x="70" y="150" class="t2" text-anchor="middle">0ms</text>
+    <text x="176" y="150" class="t2" text-anchor="middle">90ms</text>
+    <text x="282" y="150" class="t2" text-anchor="middle">180ms</text>
+    <path d="M20 162h312" stroke="#262C39"/>
+    <text x="20" y="186" class="spec">180ms · enter；输入框出现内容即触发</text>
+    <text x="20" y="208" class="spec">translateY(18px→0) + opacity，四周错开 40ms</text>
+    <text x="20" y="240" class="faint" font-size="9.5">清空收起 140ms · exit；没有发送键，也没有底部栏位移</text>
+  </g>
+
+  <!-- 2 单击球体 -->
+  <g transform="translate(424 514)">
+    <rect width="352" height="270" rx="20" fill="#171B24" stroke="#333A4B" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="#2A3152"/>
+    <text x="32" y="36" fill="#B0A8FF" font-size="10" font-weight="700" text-anchor="middle">2</text>
+    <text x="52" y="37" class="ink" font-size="13.5" font-weight="650">单击球体</text>
+    <rect x="20" y="56" width="100" height="78" rx="10" fill="#1C212C"/>
+    <rect x="126" y="56" width="100" height="78" rx="10" fill="#1C212C"/>
+    <rect x="232" y="56" width="100" height="78" rx="10" fill="#1C212C"/>
+    <circle cx="70" cy="95" r="24" fill="url(#ibOrb)" stroke="#333A4B" stroke-width="1.1"/>
+    <circle cx="176" cy="95" r="22" fill="url(#ibOrb)" stroke="#8E86FF" stroke-width="1.6"/>
+    <circle cx="176" cy="95" r="30" fill="none" stroke="#8E86FF" opacity=".35"/>
+    <circle cx="282" cy="95" r="24" fill="url(#ibOrb)" stroke="#5CC6A0" stroke-width="1.6"/>
+    <circle cx="300" cy="113" r="7" fill="#5CC6A0"/>
+    <use href="#i-check" x="296.5" y="109.5" width="7" height="7" color="#FFFFFF"/>
+    <text x="70" y="150" class="t2" text-anchor="middle">待发</text>
+    <text x="176" y="150" class="t2" text-anchor="middle">按下 120ms</text>
+    <text x="282" y="150" class="t2" text-anchor="middle">已发送</text>
+    <path d="M20 162h312" stroke="#262C39"/>
+    <text x="20" y="186" class="spec">按下 scale .94 · 120ms；松手回弹 100ms</text>
+    <text x="20" y="208" class="spec">发送后环 180ms 过渡到状态色，不弹动位置</text>
+    <text x="20" y="240" class="faint" font-size="9">只有被点的那颗动；其余球体停在原位</text>
+  </g>
+
+  <!-- 3 环状态切换 -->
+  <g transform="translate(800 514)">
+    <rect width="352" height="270" rx="20" fill="#171B24" stroke="#333A4B" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="#2A3152"/>
+    <text x="32" y="36" fill="#B0A8FF" font-size="10" font-weight="700" text-anchor="middle">3</text>
+    <text x="52" y="37" class="ink" font-size="13.5" font-weight="650">环状态切换</text>
+    <rect x="20" y="56" width="100" height="78" rx="10" fill="#1C212C"/>
+    <rect x="126" y="56" width="100" height="78" rx="10" fill="#1C212C"/>
+    <rect x="232" y="56" width="100" height="78" rx="10" fill="#1C212C"/>
+    <circle cx="70" cy="95" r="24" fill="url(#ibOrb)" stroke="#333A4B" stroke-width="1.1"/>
+    <circle cx="70" cy="95" r="30" fill="none" stroke="#5CC6A0" stroke-width="1.6" opacity=".7"/>
+    <circle cx="176" cy="95" r="24" fill="url(#ibOrb)" stroke="#333A4B" stroke-width="1.1"/>
+    <circle cx="176" cy="95" r="30" fill="none" stroke="#594122" stroke-width="1.6" stroke-dasharray="4 6"/>
+    <circle cx="282" cy="95" r="24" fill="url(#ibOrb)" stroke="#333A4B" stroke-width="1.1"/>
+    <circle cx="282" cy="95" r="30" fill="none" stroke="#262C39" stroke-width="1.6" stroke-dasharray="132 57" transform="rotate(-90 282 95)"/>
+    <circle cx="282" cy="95" r="30" fill="none" stroke="#8E86FF" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="60 129" transform="rotate(-90 282 95)"/>
+    <text x="70" y="150" class="t2" text-anchor="middle">同步</text>
+    <text x="176" y="150" class="t2" text-anchor="middle">改字 180ms</text>
+    <text x="282" y="150" class="t2" text-anchor="middle">补发中</text>
+    <path d="M20 162h312" stroke="#262C39"/>
+    <text x="20" y="186" class="spec">环的颜色与线型 180ms 互渐变，半径不变</text>
+    <text x="20" y="208" class="spec">进度环用 dashoffset，不改圆周长</text>
+    <text x="20" y="240" class="faint" font-size="9">数字每秒更新一次；68% 不做数字滚动</text>
+  </g>
+
+  <!-- 4 添加设备展开 -->
+  <g transform="translate(48 804)">
+    <rect width="352" height="270" rx="20" fill="#171B24" stroke="#333A4B" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="#2A3152"/>
+    <text x="32" y="36" fill="#B0A8FF" font-size="10" font-weight="700" text-anchor="middle">4</text>
+    <text x="52" y="37" class="ink" font-size="13.5" font-weight="650">添加设备展开</text>
+    <rect x="20" y="56" width="100" height="78" rx="10" fill="#1C212C"/>
+    <rect x="126" y="56" width="100" height="78" rx="10" fill="#1C212C"/>
+    <rect x="232" y="56" width="100" height="78" rx="10" fill="#1C212C"/>
+    <circle cx="70" cy="95" r="18" fill="none" stroke="#8E86FF" stroke-dasharray="4 5" stroke-width="1.2"/>
+    <circle cx="70" cy="95" r="12" fill="#171B24" stroke="#262C39"/>
+    <path d="M70 89v12M64 95h12" stroke="#A79FFF" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="176" cy="95" r="24" fill="#171B24" stroke="#3B4256"/>
+    <text x="176" y="99" class="mono ink ui" font-size="9" font-weight="700" text-anchor="middle">4821</text>
+    <circle cx="282" cy="95" r="18" fill="url(#ibOrb)" stroke="#333A4B" opacity=".55"/>
+    <circle cx="282" cy="95" r="24" fill="url(#ibOrb)" stroke="#333A4B" stroke-width="1.1" filter="url(#soft)"/>
+    <text x="70" y="150" class="t2" text-anchor="middle">加号球</text>
+    <text x="176" y="150" class="t2" text-anchor="middle">配对中</text>
+    <text x="282" y="150" class="t2" text-anchor="middle">新球</text>
+    <path d="M20 162h312" stroke="#262C39"/>
+    <text x="20" y="186" class="spec">配对成功 240ms：新球从加号球位置展开</text>
+    <text x="20" y="208" class="spec">scale .6→1 + opacity，周围环同步出现</text>
+    <text x="20" y="240" class="faint" font-size="9">加号球不移位，新球避开已有设备落位</text>
+  </g>
+
+  <!-- 5 平移与缩放 -->
+  <g transform="translate(424 804)">
+    <rect width="352" height="270" rx="20" fill="#171B24" stroke="#333A4B" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="#2A3152"/>
+    <text x="32" y="36" fill="#B0A8FF" font-size="10" font-weight="700" text-anchor="middle">5</text>
+    <text x="52" y="37" class="ink" font-size="13.5" font-weight="650">平移与缩放</text>
+    <rect x="20" y="56" width="100" height="78" rx="10" fill="#1C212C"/>
+    <rect x="126" y="56" width="100" height="78" rx="10" fill="#1C212C"/>
+    <rect x="232" y="56" width="100" height="78" rx="10" fill="#1C212C"/>
+    <g opacity=".3"><circle cx="40" cy="95" r="16" fill="url(#ibOrb)" stroke="#333A4B"/></g>
+    <g opacity=".6"><circle cx="130" cy="95" r="18" fill="url(#ibOrb)" stroke="#333A4B"/></g>
+    <circle cx="228" cy="95" r="22" fill="url(#ibOrb)" stroke="#333A4B" stroke-width="1.1" filter="url(#soft)"/>
+    <path d="M232 136l14-6" stroke="#8E86FF" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="3 3"/>
+    <rect x="270" y="82" width="36" height="26" rx="5" fill="#171B24" stroke="#333A4B"/>
+    <rect x="274" y="86" width="14" height="10" rx="2" fill="none" stroke="#8E86FF" stroke-width="1"/>
+    <text x="70" y="150" class="t2" text-anchor="middle">0ms</text>
+    <text x="176" y="150" class="t2" text-anchor="middle">跟手</text>
+    <text x="282" y="150" class="t2" text-anchor="middle">松手惯性</text>
+    <path d="M20 162h312" stroke="#262C39"/>
+    <text x="20" y="186" class="spec">拖动跟手 0ms；松手后 240ms 减速停下</text>
+    <text x="20" y="208" class="spec">缩放以指尖为锚点，小地图视口框同步</text>
+    <text x="20" y="240" class="faint" font-size="9">移动超过 4px 才算拖拽，否则仍是点击发送</text>
+  </g>
+
+  <!-- 6 减少动态 -->
+  <g transform="translate(800 804)">
+    <rect width="352" height="270" rx="20" fill="#171B24" stroke="#333A4B" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="#2A3152"/>
+    <text x="32" y="36" fill="#B0A8FF" font-size="10" font-weight="700" text-anchor="middle">6</text>
+    <text x="52" y="37" class="ink" font-size="13.5" font-weight="650">减少动态</text>
+    <rect x="20" y="56" width="312" height="78" rx="10" fill="#1C212C"/>
+    <circle cx="96" cy="95" r="26" fill="url(#ibOrb)" stroke="#333A4B" opacity=".25"/>
+    <circle cx="176" cy="95" r="26" fill="url(#ibOrb)" stroke="#333A4B" opacity=".6"/>
+    <circle cx="256" cy="95" r="26" fill="url(#ibOrb)" stroke="#333A4B" filter="url(#soft)"/>
+    <text x="96" y="150" class="t2" text-anchor="middle">0ms</text>
+    <text x="176" y="150" class="t2" text-anchor="middle">60ms</text>
+    <text x="256" y="150" class="t2" text-anchor="middle">120ms</text>
+    <path d="M20 162h312" stroke="#262C39"/>
+    <text x="20" y="186" class="spec">prefers-reduced-motion：位移归零，只留淡入</text>
+    <text x="20" y="208" class="spec">无弹跳、无惯性、无球体浮动循环</text>
+    <text x="20" y="240" class="faint" font-size="9">进度环仍按实际百分比更新，不是动画</text>
+  </g>
+
+  <text x="48" y="1100" class="faint" font-size="10">动效只解释状态变化 · 传输进度不缓动 · 系统开启「减少动态」时全部降为淡入</text>
+  <text x="1152" y="1100" class="faint" font-size="10" text-anchor="end">配套：drift-main-desktop.svg / drift-main-mobile.svg</text>
+</svg>

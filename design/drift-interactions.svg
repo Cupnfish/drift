@@ -1,0 +1,280 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Drift 交互规则（设备球体）</title>
+  <desc id="desc">六张交互规则卡片：输入与暂存、单击球体发送、球体上的五种状态、添加与配对新设备、无限画布平移缩放、接收与失败。每张卡片含一个状态示意与对应的处理规则，全部围绕「输入框有内容才浮出设备球体」这一模型。</desc>
+  <defs>
+    <radialGradient id="ibOrb" cx=".34" cy=".26" r=".9">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset=".56" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F7F8FD"/>
+    </radialGradient>
+    <radialGradient id="ibSpec" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity=".7"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ibBg" x1="0" y1="0" x2="1200" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F6F8FC"/>
+      <stop offset="1" stop-color="#EEF1F8"/>
+    </linearGradient>
+    <filter id="card" x="-10%" y="-10%" width="120%" height="125%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#25304A" flood-opacity="0.06"/>
+    </filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="3" stdDeviation="7" flood-color="#25304A" flood-opacity="0.10"/>
+    </filter>
+    <filter id="ibGlow" x="-120%" y="-120%" width="340%" height="340%"><feGaussianBlur stdDeviation="4"/></filter>
+        <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3 9.8 14.2M21 3l-7.2 18-4-6.8L3 10.2 21 3Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M2.5 20h19M8 20l.7-4h6.6l.7 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M10 5h4M11 18.5h2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 2.8h8l4 4V21H6V2.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 3v4h4M9 12h6M9 16h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6.5h7l2-2h9v15H3v-13Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M3 9h18" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20h4l10.5-10.5a2.4 2.4 0 0 0-3.4-3.4L4.6 16.6 4 20Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m13.6 7.4 3 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/></symbol>
+    <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.6a9.4 9.4 0 0 1 9.4 9.4M12 6.2a5.8 5.8 0 0 1 5.8 5.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M16 8V4H4v12h4" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v11m0 0 4-4m-4 4-4-4M4 19h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 6h16M9 6V3h6v3M6.5 6l1 15h9l1-15M10 10v7M14 10v7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-tray" viewBox="0 0 24 24"><path d="M12 3v9m0 0 3.4-3.4M12 12 8.6 8.6M4 15v5h16v-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cursor" viewBox="0 0 24 24"><path d="M5.2 3.2 19 11.8l-6.1 1.4-2.7 6.2L5.2 3.2Z" fill="currentColor" stroke="#FFFFFF" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+    <symbol id="i-tablet" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="2.6" stroke="currentColor" stroke-width="1.7"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.2 19 6v6c0 4.4-3 7.4-7 9-4-1.6-7-4.6-7-9V6l7-2.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M9.5 14.5 14.5 9.5M8.5 10.5 6.2 12.8a3.6 3.6 0 0 0 5 5l2.3-2.3M15.5 13.5l2.3-2.3a3.6 3.6 0 0 0-5-5l-2.3 2.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-unlink" viewBox="0 0 24 24"><path d="M8.5 10.5 6.2 12.8a3.6 3.6 0 0 0 5 5l2.3-2.3M15.5 13.5l2.3-2.3a3.6 3.6 0 0 0-5-5l-2.3 2.3M4 4l16 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3.5 21 20H3L12 3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 9v5M12 17.2h.1" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/> <path d="M20 4.2v4.6h-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.8 12S6.5 5.8 12 5.8 21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/> <circle cx="12" cy="12" r="2.8" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M14 7l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <style>
+      text { font-family: Inter, "SF Pro Display", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .ink { fill: #202331; }
+      .muted { fill: #5A6276; }
+      .faint { fill: #6A7284; }
+      .rule { font-size: 10.5px; fill: #5A6276; }
+      .mono { font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Mono", Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace; letter-spacing: .03em; }
+      .ui { font-variant-numeric: tabular-nums; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#ibBg)"/>
+  <text x="48" y="66" class="ink" font-size="25" font-weight="650" letter-spacing="-.03em">Drift · 交互规则</text>
+  <text x="48" y="92" class="muted" font-size="12">输入即浮出设备球体；单击发送，状态画在环上</text>
+  <text x="1152" y="66" class="faint" font-size="11" text-anchor="end">v1.5 · 2026.11</text>
+
+  <!-- ══ 1 · 输入与暂存 ══ -->
+  <g transform="translate(48 128)">
+    <rect width="352" height="356" rx="22" fill="#FFFFFF" stroke="#E8EAF1" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="#EDEEFF"/>
+    <text x="32" y="36" fill="#5A50E8" font-size="10" font-weight="700" text-anchor="middle">1</text>
+    <text x="52" y="37" class="ink" font-size="14" font-weight="650">输入与暂存</text>
+    <rect x="20" y="56" width="312" height="140" rx="16" fill="#F7F8FD"/>
+
+    <rect x="20" y="96" width="312" height="46" rx="14" fill="#FFFFFF" stroke="#6D64F6"/>
+    <rect x="32" y="104" width="24" height="24" rx="8" fill="#F3F4F8"/>
+    <use href="#i-plus" x="38" y="110" width="12" height="12" color="#5A6276"/>
+    <text x="66" y="119" class="ink" font-size="10">会议纪要已更新，周五评审</text>
+    <rect x="204" y="111" width="1.4" height="14" rx=".7" fill="#6D64F6"/>
+    <use href="#i-tray" x="306" y="110" width="13" height="13" color="#5A6276"/>
+
+    <text x="176" y="168" class="mono faint ui" font-size="9" text-anchor="middle">输入框只显示正文 · 不标记差异</text>
+
+    <circle cx="24" cy="218" r="2" fill="#B4B9E8"/>
+    <text x="36" y="222" class="rule">没有发送键；有内容才浮出球体，清空即收起</text>
+    <circle cx="24" cy="242" r="2" fill="#B4B9E8"/>
+    <text x="36" y="246" class="rule">Ctrl / Cmd + V 任意位置粘贴，先落进输入区</text>
+    <circle cx="24" cy="266" r="2" fill="#B4B9E8"/>
+    <text x="36" y="270" class="rule">发送后内容保留，可继续改字或再点别的球</text>
+    <circle cx="24" cy="290" r="2" fill="#B4B9E8"/>
+    <text x="36" y="294" class="rule">超过 3 行自动增高，120px 后内部滚动</text>
+    <circle cx="24" cy="314" r="2" fill="#B4B9E8"/>
+    <text x="36" y="318" class="rule">输入框内永远不做 diff 高亮或字数徽章</text>
+  </g>
+
+  <!-- ══ 2 · 单击球体发送 ══ -->
+  <g transform="translate(424 128)">
+    <rect width="352" height="356" rx="22" fill="#FFFFFF" stroke="#E8EAF1" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="#EDEEFF"/>
+    <text x="32" y="36" fill="#5A50E8" font-size="10" font-weight="700" text-anchor="middle">2</text>
+    <text x="52" y="37" class="ink" font-size="14" font-weight="650">单击球体发送</text>
+    <rect x="20" y="56" width="312" height="140" rx="16" fill="#F7F8FD"/>
+
+    <circle cx="76" cy="120" r="26" fill="#EDEEFF" stroke="#6D64F6" stroke-width="1.4"/>
+    <use href="#i-monitor" x="65" y="109" width="22" height="22" color="#584DE5"/>
+    <path d="M76 120l44-22" stroke="#6D64F6" stroke-width="1.3" stroke-linecap="round" opacity=".45"/>
+    <circle cx="176" cy="120" r="26" fill="url(#ibOrb)" stroke="#E8EAF1" stroke-width="1.1" filter="url(#soft)"/>
+    <ellipse cx="168" cy="110" rx="8" ry="4.5" transform="rotate(-28 168 110)" fill="url(#ibSpec)"/>
+    <use href="#i-phone" x="167" y="111" width="18" height="18" color="#5A6276"/>
+    <circle cx="276" cy="120" r="26" fill="url(#ibOrb)" stroke="#32866A" stroke-width="1.6"/>
+    <use href="#i-tablet" x="267" y="111" width="18" height="18" color="#5A6276"/>
+    <circle cx="294" cy="138" r="7" fill="#32866A"/>
+    <use href="#i-check" x="290.5" y="134.5" width="7" height="7" color="#FFFFFF"/>
+
+    <text x="76" y="176" class="mono faint ui" font-size="9" text-anchor="middle">点按</text>
+    <text x="176" y="176" class="mono faint ui" font-size="9" text-anchor="middle">其余不动</text>
+    <text x="276" y="176" class="mono faint ui" font-size="9" text-anchor="middle">环变绿</text>
+
+    <circle cx="24" cy="218" r="2" fill="#B4B9E8"/>
+    <text x="36" y="222" class="rule">单击任意球体立刻发送给那一台，不做划过多选</text>
+    <circle cx="24" cy="242" r="2" fill="#B4B9E8"/>
+    <text x="36" y="246" class="rule">要发多台，就连续点几个球；每台各自独立记录</text>
+    <circle cx="24" cy="266" r="2" fill="#B4B9E8"/>
+    <text x="36" y="270" class="rule">发送后输入内容不变，球体进入已发送状态</text>
+    <circle cx="24" cy="290" r="2" fill="#B4B9E8"/>
+    <text x="36" y="294" class="rule">点按只作用于球体本身，不弹出确认或二级菜单</text>
+    <circle cx="24" cy="314" r="2" fill="#B4B9E8"/>
+    <text x="36" y="318" class="rule">传输中的球再点一次即暂停，不取消已传部分</text>
+  </g>
+
+  <!-- ══ 3 · 球体上的状态 ══ -->
+  <g transform="translate(800 128)">
+    <rect width="352" height="356" rx="22" fill="#FFFFFF" stroke="#E8EAF1" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="#EDEEFF"/>
+    <text x="32" y="36" fill="#5A50E8" font-size="10" font-weight="700" text-anchor="middle">3</text>
+    <text x="52" y="37" class="ink" font-size="14" font-weight="650">环即状态</text>
+    <rect x="20" y="56" width="312" height="140" rx="16" fill="#F7F8FD"/>
+
+    <!-- 传输中 -->
+    <circle cx="96" cy="102" r="30" fill="none" stroke="#EFF0F5" stroke-width="1.8" stroke-dasharray="132 57" transform="rotate(-90 96 102)"/>
+    <circle cx="96" cy="102" r="30" fill="none" stroke="#6D64F6" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="131 57" transform="rotate(-90 96 102)"/>
+    <circle cx="96" cy="102" r="24" fill="url(#ibOrb)" stroke="#E8EAF1" stroke-width="1"/>
+    <text x="96" y="105" class="mono ui" font-size="9" font-weight="600" fill="#5A50E8" text-anchor="middle">68%</text>
+    <text x="96" y="148" class="faint" font-size="9.5" text-anchor="middle">传输中</text>
+
+    <!-- 内容改过 -->
+    <circle cx="196" cy="102" r="30" fill="none" stroke="#F3D9B1" stroke-width="1.8" stroke-dasharray="4 6"/>
+    <circle cx="196" cy="102" r="24" fill="url(#ibOrb)" stroke="#E8EAF1" stroke-width="1"/>
+    <use href="#i-refresh" x="188" y="94" width="16" height="16" color="#9A520C"/>
+    <text x="196" y="148" class="faint" font-size="9.5" text-anchor="middle">可补发</text>
+
+    <!-- 已同步 -->
+    <circle cx="296" cy="102" r="30" fill="none" stroke="#32866A" stroke-width="1.8" opacity=".75"/>
+    <circle cx="296" cy="102" r="24" fill="url(#ibOrb)" stroke="#E8EAF1" stroke-width="1"/>
+    <circle cx="316" cy="122" r="7" fill="#32866A"/>
+    <use href="#i-check" x="312.5" y="118.5" width="7" height="7" color="#FFFFFF"/>
+    <text x="296" y="148" class="faint" font-size="9.5" text-anchor="middle">已同步</text>
+    <path d="M52 168h268" stroke="#EFF0F5"/>
+
+    <circle cx="24" cy="184" r="2" fill="#B4B9E8"/>
+    <text x="36" y="188" class="rule">待发无环；传输紫、可补发橙虚线、已同步绿、暂停灰部分环</text>
+    <circle cx="24" cy="206" r="2" fill="#B4B9E8"/>
+    <text x="36" y="210" class="rule">颜色必须配文字或勾选，不能只靠颜色区分</text>
+    <circle cx="24" cy="228" r="2" fill="#B4B9E8"/>
+    <text x="36" y="232" class="rule">增量差异写在那一台球体的下方，不搬到输入框</text>
+    <circle cx="24" cy="256" r="2" fill="#B4B9E8"/>
+    <text x="36" y="260" class="rule">改字后，之前发过的球体自动从绿环切成橙虚线</text>
+    <circle cx="24" cy="280" r="2" fill="#B4B9E8"/>
+    <text x="36" y="284" class="rule">再点一次只补发差异（文本按段、文件按哈希）</text>
+    <circle cx="24" cy="304" r="2" fill="#B4B9E8"/>
+    <text x="36" y="308" class="rule">从未发过的球体保持无环，点击发送全部内容</text>
+    <circle cx="24" cy="328" r="2" fill="#B4B9E8"/>
+    <text x="36" y="332" class="rule">环的粗细与球体大小不随状态变化，避免误读为进度</text>
+  </g>
+
+  <!-- ══ 4 · 添加与配对新设备 ══ -->
+  <g transform="translate(48 508)">
+    <rect width="352" height="356" rx="22" fill="#FFFFFF" stroke="#E8EAF1" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="#EDEEFF"/>
+    <text x="32" y="36" fill="#5A50E8" font-size="10" font-weight="700" text-anchor="middle">4</text>
+    <text x="52" y="37" class="ink" font-size="14" font-weight="650">添加设备</text>
+    <rect x="20" y="56" width="312" height="140" rx="16" fill="#F7F8FD"/>
+
+    <circle cx="86" cy="118" r="32" fill="none" stroke="#8578EA" stroke-width="1.3" stroke-dasharray="4 5"/>
+    <circle cx="86" cy="118" r="25" fill="#FFFFFF" stroke="#EFF0F5" stroke-width="1"/>
+    <path d="M86 107v22M75 118h22" stroke="#584DE5" stroke-width="1.8" stroke-linecap="round"/>
+    <text x="86" y="170" class="faint" font-size="9.5" text-anchor="middle">虚线加号球</text>
+
+    <path d="M136 118h40" stroke="#E7E9F0" stroke-width="1.4" stroke-linecap="round" marker-end=""/>
+    <path d="m170 113 6 5-6 5" stroke="#E7E9F0" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+    <circle cx="232" cy="118" r="26" fill="#FFFFFF" stroke="#E8EAF1" stroke-width="1.2"/>
+    <text x="232" y="122" class="mono ink ui" font-size="10" font-weight="700" text-anchor="middle">4821</text>
+    <text x="232" y="170" class="faint" font-size="9.5" text-anchor="middle">两端显示同一号码</text>
+
+    <circle cx="298" cy="90" r="6" fill="#32866A"/>
+    <path d="M292 118h12M292 130h12" stroke="#E7E9F0" stroke-width="1.3"/>
+
+    <circle cx="24" cy="218" r="2" fill="#B4B9E8"/>
+    <text x="36" y="222" class="rule">加号球常驻画布，点开就地配对，不跳设置页</text>
+    <circle cx="24" cy="242" r="2" fill="#B4B9E8"/>
+    <text x="36" y="246" class="rule">配对成功后新球从加号球位置展开，直接可发</text>
+    <circle cx="24" cy="266" r="2" fill="#B4B9E8"/>
+    <text x="36" y="270" class="rule">默认用设备型号作名字，配对时广播给对方</text>
+    <circle cx="24" cy="290" r="2" fill="#B4B9E8"/>
+    <text x="36" y="294" class="rule">自己改名随时可改；别人的名字只改本地显示</text>
+    <circle cx="24" cy="314" r="2" fill="#B4B9E8"/>
+    <text x="36" y="318" class="rule">名字与型号一致时列表只显示一个（见 drift-devices）</text>
+  </g>
+
+  <!-- ══ 5 · 无限画布 ══ -->
+  <g transform="translate(424 508)">
+    <rect width="352" height="356" rx="22" fill="#FFFFFF" stroke="#E8EAF1" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="#EDEEFF"/>
+    <text x="32" y="36" fill="#5A50E8" font-size="10" font-weight="700" text-anchor="middle">5</text>
+    <text x="52" y="37" class="ink" font-size="14" font-weight="650">拖动视角</text>
+    <rect x="20" y="56" width="312" height="140" rx="16" fill="#F7F8FD"/>
+
+    <rect x="20" y="70" width="220" height="112" rx="12" fill="none" stroke="#E8EAF1" stroke-dasharray="3 4"/>
+    <g opacity=".45">
+      <circle cx="30" cy="100" r="18" fill="url(#ibOrb)" stroke="#E8EAF1"/>
+      <circle cx="52" cy="166" r="16" fill="url(#ibOrb)" stroke="#E8EAF1"/>
+    </g>
+    <circle cx="120" cy="126" r="22" fill="url(#ibOrb)" stroke="#E8EAF1" stroke-width="1.1" filter="url(#soft)"/>
+    <circle cx="186" cy="100" r="18" fill="url(#ibOrb)" stroke="#E8EAF1" stroke-width="1"/>
+    <path d="M196 148l22-10" stroke="#6D64F6" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="3 3"/>
+
+    <rect x="256" y="70" width="58" height="40" rx="8" fill="#FFFFFF" stroke="#E8EAF1"/>
+    <rect x="264" y="79" width="26" height="18" rx="3" fill="none" stroke="#6D64F6" stroke-width="1.1"/>
+    <circle cx="272" cy="83" r="1.8" fill="#6D64F6"/>
+    <circle cx="286" cy="94" r="1.8" fill="#6A7284"/>
+    <circle cx="296" cy="79" r="1.8" fill="#6A7284"/>
+    <text x="290" y="124" class="faint" font-size="9.5" text-anchor="middle">小地图</text>
+
+    <circle cx="24" cy="218" r="2" fill="#B4B9E8"/>
+    <text x="36" y="222" class="rule">拖空白处平移画布，滚轮或双指缩放</text>
+    <circle cx="24" cy="242" r="2" fill="#B4B9E8"/>
+    <text x="36" y="246" class="rule">被窗口裁掉的球体露在边缘，提示还有更多</text>
+    <circle cx="24" cy="266" r="2" fill="#B4B9E8"/>
+    <text x="36" y="270" class="rule">右上小地图标出当前视口与窗外设备数量</text>
+    <circle cx="24" cy="290" r="2" fill="#B4B9E8"/>
+    <text x="36" y="294" class="rule">拖动与点按不冲突：移动超过 4px 才算拖拽</text>
+    <circle cx="24" cy="314" r="2" fill="#B4B9E8"/>
+    <text x="36" y="318" class="rule">视角记住上一次位置，收起再浮出不跳回原点</text>
+  </g>
+
+  <!-- ══ 6 · 接收与失败 ══ -->
+  <g transform="translate(800 508)">
+    <rect width="352" height="356" rx="22" fill="#FFFFFF" stroke="#E8EAF1" filter="url(#card)"/>
+    <circle cx="32" cy="32" r="10" fill="#EDEEFF"/>
+    <text x="32" y="36" fill="#5A50E8" font-size="10" font-weight="700" text-anchor="middle">6</text>
+    <text x="52" y="37" class="ink" font-size="14" font-weight="650">接收与失败</text>
+    <rect x="20" y="56" width="312" height="140" rx="16" fill="#F7F8FD"/>
+
+    <rect x="20" y="72" width="312" height="38" rx="11" fill="#FFFFFF" stroke="#E8EAF1"/>
+    <use href="#i-check" x="34" y="85" width="13" height="13" color="#32866A"/>
+    <text x="56" y="95" class="ink" font-size="9.5" font-weight="600">已送达 MacBook Pro、iPhone 15</text>
+    <text x="318" y="95" class="mono faint ui" font-size="8.5" text-anchor="end">14:24</text>
+
+    <rect x="20" y="118" width="312" height="38" rx="11" fill="#FDF2F3" stroke="#F3D9DB"/>
+    <use href="#i-warn" x="34" y="131" width="13" height="13" color="#C95863"/>
+    <text x="56" y="141" fill="#8E3B44" font-size="9.5" font-weight="600">iPad Air · 连接中断</text>
+    <text x="318" y="141" fill="#C04F5B" font-size="9" font-weight="600" text-anchor="end">重试</text>
+
+    <circle cx="24" cy="218" r="2" fill="#B4B9E8"/>
+    <text x="36" y="222" class="rule">每条结果在会话里写一行，不另开弹窗</text>
+    <circle cx="24" cy="242" r="2" fill="#B4B9E8"/>
+    <text x="36" y="246" class="rule">单台失败只标那一台，重试不影响其他设备</text>
+    <circle cx="24" cy="266" r="2" fill="#B4B9E8"/>
+    <text x="36" y="270" class="rule">对方拒收则告诉对方「已拒收」，不自动重试</text>
+    <circle cx="24" cy="290" r="2" fill="#B4B9E8"/>
+    <text x="36" y="294" class="rule">断线自动重连，30 秒后转为等待重试</text>
+    <circle cx="24" cy="314" r="2" fill="#B4B9E8"/>
+    <text x="36" y="318" class="rule">完成：环收束成绿，保留「已送达 N 台」</text>
+  </g>
+
+  <text x="48" y="884" class="faint" font-size="10">所有记录仅保存在本机 · 传输走局域网，不经过服务器</text>
+  <text x="1152" y="884" class="faint" font-size="10" text-anchor="end">配套：drift-main-desktop.svg / drift-main-mobile.svg / drift-devices.svg</text>
+</svg>

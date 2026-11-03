@@ -1,0 +1,210 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="940" viewBox="0 0 1280 940" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Drift 增量发送 · 设备级内容预览设计提案</title>
+  <desc id="desc">设计提案：输入框只展示完整、未标记的当前内容；每台设备卡片独立展示该设备待补发的文本片段或新增文件。画面包含文本追加、文件新增、文本修改和已同步四种设备状态。</desc>
+  <defs>
+    <linearGradient id="boardBg" x1="85" y1="12" x2="1196" y2="932" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4F6FB"/>
+      <stop offset="1" stop-color="#E9EDF5"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#7168FF"/>
+      <stop offset="1" stop-color="#554BE6"/>
+    </linearGradient>
+    <linearGradient id="sendButton" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#7168FF"/>
+      <stop offset="1" stop-color="#554BE6"/>
+    </linearGradient>
+    <filter id="windowShadow" x="0" y="0" width="1280" height="940" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="15" stdDeviation="24" flood-color="#25304A" flood-opacity="0.14"/>
+    </filter>
+    <filter id="panelShadow" x="-10%" y="-15%" width="120%" height="140%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="11" stdDeviation="18" flood-color="#202943" flood-opacity="0.13"/>
+    </filter>
+    <filter id="composerShadow" x="-8%" y="-25%" width="116%" height="160%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="5" stdDeviation="9" flood-color="#28314B" flood-opacity="0.07"/>
+    </filter>
+    <clipPath id="windowClip"><rect x="32" y="104" width="1216" height="800" rx="26"/></clipPath>
+    <style>
+      text { font-family: Inter, "SF Pro Display", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .ink { fill: #202331; }
+      .body { fill: #3A4155; }
+      .muted { fill: #5A6276; }
+      .faint { fill: #6A7284; }
+      .delta { fill: #7C3F06; }
+      .green { fill: #2C7A60; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="940" fill="url(#boardBg)"/>
+  <circle cx="1206" cy="82" r="184" fill="#DCDFFC" opacity=".36"/>
+  <circle cx="70" cy="900" r="170" fill="#D8ECE8" opacity=".34"/>
+
+  <!-- Design-board heading -->
+  <rect x="48" y="31" width="113" height="24" rx="12" fill="#EDEEFF"/>
+  <text x="104.5" y="47" text-anchor="middle" fill="#5A50E8" font-size="10" font-weight="750" letter-spacing=".08em">DESIGN PROPOSAL</text>
+  <text x="48" y="82" class="ink" font-size="25" font-weight="750" letter-spacing="-.035em">增量发送 · 设备级内容预览</text>
+  <text x="456" y="80" class="muted" font-size="12.5">输入框保持干净完整；每台设备只呈现自己尚未同步的部分</text>
+  <text x="1232" y="48" text-anchor="end" class="faint" font-size="10.5">桌面端概念稿 · 01</text>
+
+  <!-- App window -->
+  <g filter="url(#windowShadow)"><rect x="32" y="104" width="1216" height="800" rx="26" fill="#FFFFFF"/></g>
+  <g clip-path="url(#windowClip)">
+    <rect x="32" y="104" width="1216" height="800" fill="#FBFCFE"/>
+    <rect x="32" y="104" width="1216" height="68" fill="#FFFFFF"/>
+    <path d="M32 172H1248" stroke="#E8EAF1"/>
+    <rect x="56" y="121" width="36" height="36" rx="12" fill="url(#brand)"/>
+    <path d="m65 139 18-9-7 20-4-7-7-4Z" stroke="#FFFFFF" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="m72 143 11-13" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+    <text x="104" y="146" class="ink" font-size="21" font-weight="750" letter-spacing="-.04em">Drift</text>
+    <path d="M1002 130h17l3-4h17v23h-37v-19Z" stroke="#5F6678" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M1002 135h37" stroke="#5F6678" stroke-width="1.5"/>
+    <text x="1048" y="144" class="muted" font-size="11.5" font-weight="550">接收目录</text>
+    <path d="M1126 130h20M1130 137h12M1134 144h4" stroke="#5F6678" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="1181" cy="135" r="7" stroke="#5F6678" stroke-width="1.6"/>
+    <path d="m1186 140 5 5" stroke="#5F6678" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="1211" cy="135" r="1.5" fill="#5F6678"/><circle cx="1217" cy="135" r="1.5" fill="#5F6678"/><circle cx="1223" cy="135" r="1.5" fill="#5F6678"/>
+
+    <!-- Quiet transfer history underneath the device sheet -->
+    <path d="M90 202h320M590 202h530" stroke="#E8EAF1"/>
+    <rect x="410" y="190" width="180" height="24" rx="12" fill="#F1F3F7"/>
+    <text x="500" y="206" text-anchor="middle" class="faint" font-size="10.5">今天 · 传输会话</text>
+    <rect x="78" y="224" width="270" height="91" rx="16" fill="#FFFFFF" stroke="#E5E8F0"/>
+    <rect x="94" y="241" width="40" height="40" rx="12" fill="#F0EEFF"/>
+    <path d="M105 249h11l5 5v18h-16v-23Z" stroke="#6459E9" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M116 249v5h5M109 260h8M109 265h6" stroke="#6459E9" stroke-width="1.3" stroke-linecap="round"/>
+    <text x="146" y="255" class="ink" font-size="11.5" font-weight="650">方案初稿.pdf</text>
+    <text x="146" y="274" class="faint" font-size="10">来自 MacBook Pro · 14:22</text>
+    <circle cx="103" cy="296" r="6" fill="#E7F5EF"/><path d="m100 296 2 2 4-4" stroke="#2C9A73" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="115" y="300" fill="#32866A" font-size="9.5">已接收</text>
+    <rect x="872" y="222" width="290" height="78" rx="18" fill="url(#sendButton)"/>
+    <text x="894" y="253" fill="#FFFFFF" font-size="12.5">收到，我把修订内容和文件一起补齐了。</text>
+    <text x="894" y="275" fill="#FFFFFF" opacity=".82" font-size="11">请看各设备卡片中的待同步项</text>
+    <rect x="32" y="172" width="1216" height="628" fill="#FBFCFE" opacity=".57"/>
+
+    <!-- Send-to-device panel -->
+    <g filter="url(#panelShadow)"><rect x="104" y="180" width="1072" height="574" rx="26" fill="#FFFFFF" stroke="#D6D1FA" stroke-width="1.2"/></g>
+    <rect x="132" y="202" width="40" height="40" rx="13" fill="#EEF0FF"/>
+    <path d="m143 222 17-9-6.7 19-3.8-6.6-6.5-3.4Z" stroke="#584DE5" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="m150 225 10-12" stroke="#584DE5" stroke-width="1.3" stroke-linecap="round"/>
+    <text x="184" y="218" class="ink" font-size="16" font-weight="750">发送至设备</text>
+    <text x="184" y="237" class="muted" font-size="10.5">点击设备发送 · 已发送设备仅补发各自未同步的内容</text>
+
+    <rect x="902" y="207" width="146" height="32" rx="11" fill="#EEF0FF" stroke="#D6D1FA"/>
+    <text x="975" y="227" text-anchor="middle" fill="#5A50E8" font-size="10.5" font-weight="650">发送给待发送设备</text>
+    <rect x="1060" y="207" width="86" height="32" rx="10" fill="#F3F4F8"/>
+    <path d="m1076 219 8 8m0-8-8 8" stroke="#5A6276" stroke-width="1.5" stroke-linecap="round"/>
+    <text x="1113" y="227" text-anchor="middle" class="muted" font-size="10.5" font-weight="600">收起</text>
+    <path d="M132 254H1148" stroke="#EFF0F5"/>
+
+    <!-- Device 1: device-specific appended text -->
+    <g>
+      <rect x="132" y="270" width="500" height="172" rx="18" fill="#FFFCF6" stroke="#F0D7B3" stroke-width="1.2"/>
+      <rect x="132" y="288" width="3" height="136" rx="1.5" fill="#D78B34"/>
+      <circle cx="169" cy="301" r="21" fill="#FFFFFF" stroke="#F3D9B1"/>
+      <rect x="158" y="293" width="22" height="15" rx="2" stroke="#9A520C" stroke-width="1.5"/>
+      <path d="M155 312h28M163 312l1-4h10l1 4" stroke="#9A520C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="202" y="298" class="ink" font-size="12.5" font-weight="700">MacBook Pro</text>
+      <text x="202" y="316" class="faint" font-size="9.5">上次已同步 v1 · 在线</text>
+      <rect x="490" y="284" width="120" height="23" rx="11.5" fill="#FFF4DF" stroke="#F3D9B1"/>
+      <circle cx="504" cy="295.5" r="3.3" fill="#B45808"/>
+      <text x="552" y="299" text-anchor="middle" class="delta" font-size="9.5" font-weight="700">待补发 · 文本追加</text>
+      <rect x="150" y="331" width="316" height="82" rx="12" fill="#FFF7E8"/>
+      <text x="164" y="351" fill="#9A520C" font-size="9.5" font-weight="700" letter-spacing=".03em">本次增量 · 新增 18 字</text>
+      <text x="164" y="375" class="ink" font-size="11.5" font-weight="550">“工厂部分我下午再确认。”</text>
+      <text x="164" y="397" class="faint" font-size="9">只向此设备补发这段追加文本</text>
+      <rect x="484" y="350" width="130" height="40" rx="12" fill="#B45808"/>
+      <path d="M500 370a7 7 0 1 1 2.3 5.2M500 365v5h5" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="557" y="375" text-anchor="middle" fill="#FFFFFF" font-size="10.5" font-weight="700">补发文本增量</text>
+    </g>
+
+    <!-- Device 2: different incremental files -->
+    <g>
+      <rect x="648" y="270" width="500" height="172" rx="18" fill="#FFFCF6" stroke="#F0D7B3" stroke-width="1.2"/>
+      <rect x="648" y="288" width="3" height="136" rx="1.5" fill="#D78B34"/>
+      <circle cx="685" cy="301" r="21" fill="#FFFFFF" stroke="#F3D9B1"/>
+      <rect x="677" y="288" width="16" height="27" rx="3.2" stroke="#9A520C" stroke-width="1.5"/>
+      <path d="M682 292h6M683 311h4" stroke="#9A520C" stroke-width="1.3" stroke-linecap="round"/>
+      <text x="718" y="298" class="ink" font-size="12.5" font-weight="700">iPhone 15</text>
+      <text x="718" y="316" class="faint" font-size="9.5">上次已同步 v2 · 在线</text>
+      <rect x="1006" y="284" width="120" height="23" rx="11.5" fill="#FFF4DF" stroke="#F3D9B1"/>
+      <circle cx="1020" cy="295.5" r="3.3" fill="#B45808"/>
+      <text x="1068" y="299" text-anchor="middle" class="delta" font-size="9.5" font-weight="700">待补发 · 新增文件</text>
+      <rect x="666" y="331" width="316" height="82" rx="12" fill="#FFF7E8"/>
+      <text x="680" y="351" fill="#9A520C" font-size="9.5" font-weight="700" letter-spacing=".03em">本次增量 · 2 个新文件</text>
+      <rect x="680" y="360" width="288" height="22" rx="7" fill="#FFFFFF" stroke="#F3D9B1"/>
+      <path d="M690 366h7l3 3v8h-10v-11Z" stroke="#B45808" stroke-width="1.1" stroke-linejoin="round"/>
+      <path d="M697 366v3h3" stroke="#B45808" stroke-width="1"/>
+      <text x="706" y="375" class="body" font-size="9.5" font-weight="550">品牌规范.pdf</text>
+      <text x="956" y="375" text-anchor="end" class="faint" font-size="8.5">4.8 MB</text>
+      <rect x="680" y="386" width="288" height="22" rx="7" fill="#FFFFFF" stroke="#F3D9B1"/>
+      <path d="M690 392h7l3 3v8h-10v-11Z" stroke="#B45808" stroke-width="1.1" stroke-linejoin="round"/>
+      <path d="M697 392v3h3" stroke="#B45808" stroke-width="1"/>
+      <text x="706" y="401" class="body" font-size="9.5" font-weight="550">流程图-v3.png</text>
+      <text x="956" y="401" text-anchor="end" class="faint" font-size="8.5">820 KB</text>
+      <rect x="1000" y="350" width="130" height="40" rx="12" fill="#B45808"/>
+      <path d="M1017 362v14m0 0-5-5m5 5 5-5M1010 379h14" stroke="#FFFFFF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="1074" y="375" text-anchor="middle" fill="#FFFFFF" font-size="10.5" font-weight="700">补发 2 个文件</text>
+    </g>
+
+    <!-- Device 3: edited content differs from its own snapshot -->
+    <g>
+      <rect x="132" y="454" width="500" height="172" rx="18" fill="#FFFCF6" stroke="#F0D7B3" stroke-width="1.2"/>
+      <rect x="132" y="472" width="3" height="136" rx="1.5" fill="#D78B34"/>
+      <circle cx="169" cy="485" r="21" fill="#FFFFFF" stroke="#F3D9B1"/>
+      <rect x="157" y="477" width="24" height="17" rx="2" stroke="#9A520C" stroke-width="1.5"/>
+      <path d="M165 498h8M169 494v4" stroke="#9A520C" stroke-width="1.4" stroke-linecap="round"/>
+      <text x="202" y="482" class="ink" font-size="12.5" font-weight="700">工作室 Windows</text>
+      <text x="202" y="500" class="faint" font-size="9.5">上次已同步 v1 · 在线</text>
+      <rect x="490" y="468" width="120" height="23" rx="11.5" fill="#FFF4DF" stroke="#F3D9B1"/>
+      <circle cx="504" cy="479.5" r="3.3" fill="#B45808"/>
+      <text x="552" y="483" text-anchor="middle" class="delta" font-size="9.5" font-weight="700">待更新 · 文本已修改</text>
+      <rect x="150" y="515" width="316" height="82" rx="12" fill="#FFF7E8"/>
+      <text x="164" y="535" fill="#9A520C" font-size="9.5" font-weight="700" letter-spacing=".03em">本次增量 · 当前内容与该设备不同</text>
+      <text x="164" y="559" class="ink" font-size="11.5" font-weight="550">“请以本版为准，周三前完成交付。”</text>
+      <text x="164" y="581" class="faint" font-size="9">按此设备上次发送记录计算补发内容</text>
+      <rect x="484" y="534" width="130" height="40" rx="12" fill="#B45808"/>
+      <path d="M500 554a7 7 0 1 1 2.3 5.2M500 549v5h5" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="557" y="559" text-anchor="middle" fill="#FFFFFF" font-size="10.5" font-weight="700">更新此设备</text>
+    </g>
+
+    <!-- Device 4: already current, so no delta preview -->
+    <g>
+      <rect x="648" y="454" width="500" height="172" rx="18" fill="#F8FCFA" stroke="#D5EEE2" stroke-width="1.2"/>
+      <circle cx="685" cy="485" r="21" fill="#FFFFFF" stroke="#D5EEE2"/>
+      <rect x="676" y="474" width="18" height="23" rx="3" stroke="#32866A" stroke-width="1.5"/>
+      <path d="M682 494h6" stroke="#32866A" stroke-width="1.3" stroke-linecap="round"/>
+      <text x="718" y="482" class="ink" font-size="12.5" font-weight="700">iPad Air</text>
+      <text x="718" y="500" class="faint" font-size="9.5">最近同步 · 14:26</text>
+      <rect x="1044" y="468" width="82" height="23" rx="11.5" fill="#EDF8F3" stroke="#D5EEE2"/>
+      <path d="m1056 480 2.2 2.2 4.5-4.8" stroke="#32866A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="1090" y="483" text-anchor="middle" class="green" font-size="9.5" font-weight="700">已同步 v2</text>
+      <rect x="666" y="515" width="316" height="82" rx="12" fill="#F0F8F5"/>
+      <circle cx="688" cy="545" r="11" fill="#DFF2E9"/>
+      <path d="m683 545 3.5 3.5 6.5-7" stroke="#32866A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="709" y="543" class="green" font-size="11" font-weight="650">当前内容已全部送达</text>
+      <text x="709" y="563" class="muted" font-size="9.5">此设备没有待补发项</text>
+      <rect x="1000" y="534" width="130" height="40" rx="12" fill="#FFFFFF" stroke="#D5EEE2"/>
+      <path d="m1017 554 3.5 3.5 7-8" stroke="#32866A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="1074" y="559" text-anchor="middle" class="green" font-size="10.5" font-weight="700">已是最新</text>
+    </g>
+
+    <path d="M132 646H1148" stroke="#EFF0F5"/>
+    <circle cx="141" cy="673" r="4" fill="#B45808"/>
+    <text x="154" y="677" class="muted" font-size="10">增量按设备分别计算 · 卡片仅显示该设备本次待发送内容</text>
+    <text x="1148" y="677" text-anchor="end" class="faint" font-size="10">点按设备卡片立即发送或补发</text>
+
+    <!-- Plain composer: complete draft, with no diff marks or delta badge -->
+    <rect x="108" y="776" width="1064" height="82" rx="22" fill="#FFFFFF" stroke="#D6D1FA" stroke-width="1.3" filter="url(#composerShadow)"/>
+    <rect x="126" y="796" width="42" height="42" rx="13" fill="#F2F3F8"/>
+    <path d="M147 806v22M136 817h22" stroke="#5F6678" stroke-width="1.7" stroke-linecap="round"/>
+    <text x="190" y="826" class="ink" font-size="14">这版稿子周五前定稿，工厂部分我下午再确认。</text>
+    <rect x="813" y="796" width="176" height="42" rx="13" fill="#FAF9FF" stroke="#8578EA" stroke-width="1.2" stroke-dasharray="5 4"/>
+    <path d="M835 806v15m0 0-5-5m5 5 5-5M828 826h14" stroke="#5A4FE2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="853" y="814" fill="#4E43C8" font-size="10.5" font-weight="650">拖入文件</text>
+    <text x="853" y="829" fill="#7A739F" font-size="9">或点击选择</text>
+    <rect x="1001" y="796" width="76" height="42" rx="12" fill="#F3F4F8"/>
+    <path d="m1017 810 10 10m0-10-10 10" stroke="#5A6276" stroke-width="1.4" stroke-linecap="round"/>
+    <text x="1048" y="822" text-anchor="middle" class="muted" font-size="10.5" font-weight="600">清空</text>
+    <text x="640" y="881" text-anchor="middle" class="faint" font-size="9.5">输入区始终只保留当前完整内容，不按设备拆分或标记 diff</text>
+  </g>
+</svg>

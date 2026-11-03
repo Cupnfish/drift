@@ -1,0 +1,11 @@
+/target
+gui/target/
+.preview/
+.nsh/
+
+# 本地 AI 助手状态（含会话内容，勿公开）
+.workbuddy/
+.zcode/
+
+# 设计核对残留截图
+/diff-empty.png
