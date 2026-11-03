@@ -7,19 +7,17 @@ use nsh_core::prelude::*;
 
 use crate::{icons as ic, palette as p, state::AppState, ui};
 
-/// 桌面工具栏。`right_inset`：Windows caption buttons 宽度（title_bar().right）。
-pub fn toolbar_desktop(state: &Rc<AppState>, right_inset: f32) -> View {
+/// 桌面工具栏（原生标题栏下方）。
+pub fn toolbar_desktop(state: &Rc<AppState>) -> View {
     let state_close = state.clone();
     view()
         .h(px(72.0))
         .flex_row()
         .items_center()
         .px(px(24.0))
-        .pr(px(24.0 + right_inset))
         .bg(p::SURFACE)
         .border_b_1()
         .border_b_color(p::TOOLBAR_EDGE)
-        .window_drag(true)
         // 品牌
         .child(
             view()

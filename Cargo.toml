@@ -39,8 +39,9 @@ hyper-util = { version = "0.1", features = ["client-legacy", "http1", "server", 
 http-body-util = "0.1"
 bytes = "1"
 
-# 局域网发现
+# 局域网发现（mDNS + UDP 广播回退）
 mdns-sd = "0.21"
+if-addrs = "0.13"
 
 # 本地存储
 redb = "2"
@@ -51,3 +52,10 @@ zip = { version = "2", default-features = false, features = ["deflate"] }
 mime_guess = "2"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# nsh-platform-windows 0.3.0 本地补丁（.vendor/nsh-platform-windows）：
+# 修复带 tint 的图片（所有图标）在 >100% DPI 屏幕上按 pt 值直接当物理像素绘制、
+# 且锚在元素盒左上角的问题 —— Direct2D DrawImage 特效路径把位图按其 96 DPI 对
+# 目标 DPI 折算自然尺寸，缺乘 cx.scale。上游修复后可移除本补丁。
+[patch.crates-io]
+nsh-platform-windows = { path = '.vendor/nsh-platform-windows' }

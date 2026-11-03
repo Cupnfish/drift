@@ -22,6 +22,7 @@ fn main() -> impl std::process::Termination {
             title: "Drift".to_owned(),
             app_id: app_id.to_owned(),
             size: (1080, 800),
+            appearance: platform::Appearance::Light,
             asset_base: Some(platform::AssetBase::Directory(assets)),
             ..Default::default()
         },

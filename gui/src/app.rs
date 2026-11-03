@@ -20,10 +20,11 @@ pub fn DriftApp() -> AnyElement {
         Err(e) => return launch_error(e).into_element(),
     };
 
-    // 自绘标题栏（平台无桌面窗口时无操作）；工具栏负责拖拽
+    // 桌面端用系统原生标题栏（Windows caption / macOS 交通灯 / GTK 按钮在内容区外，
+    // 不占布局）；移动端平台无桌面窗口，此调用无操作
     nsh_core::element::desktop::set_title_bar(
-        nsh_core::desktop::TitleBarStyle::Hidden,
-        Some(px(40.0)),
+        nsh_core::desktop::TitleBarStyle::Default,
+        None,
     );
 
     // 快捷键：Ctrl/Cmd+Z 撤销删除；Esc 取消拖放态
@@ -75,10 +76,9 @@ fn desktop_layout(state: &Rc<AppState>) -> impl IntoElement {
         let state = state.clone();
         move || !state.records.get().is_empty() || !state.paired.get().is_empty()
     };
-    let right = nsh_core::element::desktop::title_bar().right;
     view()
         .flex_1()
-        .child(toolbar::toolbar_desktop(&state, right.0))
+        .child(toolbar::toolbar_desktop(&state))
         .child(
             view()
                 .flex_1()

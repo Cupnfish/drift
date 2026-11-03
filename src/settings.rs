@@ -103,22 +103,28 @@ pub fn android_files_dir() -> Option<PathBuf> {
     Some(dir)
 }
 
-/// 接收目录默认值：应用外部私有存储（`/storage/emulated/0/Android/data/<pkg>/files`），
-/// 免存储权限即可写入，USB / 文件管理器可见。公开的「下载」目录要走 MediaStore，
-/// 留待后续接入。
+/// 接收目录默认值：首选应用外部私有存储（`/storage/emulated/0/Android/data/<pkg>/files`，
+/// 免存储权限、USB / 文件管理器可见）；建不成（部分 ROM 限制 / 挂载时序）退回内部
+/// 私有目录，保证可写。公开的「下载」目录要走 MediaStore，留待后续接入。
 #[cfg(target_os = "android")]
-fn android_default_download_dir() -> Option<PathBuf> {
-    let dir = PathBuf::from("/storage/emulated/0/Android/data").join(android_package()?).join("files");
-    std::fs::create_dir_all(&dir).ok()?;
-    Some(dir)
+fn android_default_download_dir() -> PathBuf {
+    if let Some(pkg) = android_package() {
+        let ext = PathBuf::from("/storage/emulated/0/Android/data")
+            .join(pkg)
+            .join("files");
+        if std::fs::create_dir_all(&ext).is_ok() {
+            return ext;
+        }
+    }
+    android_files_dir()
+        .unwrap_or_else(|| PathBuf::from("."))
+        .join("Drift")
 }
 
 impl Default for Settings {
     fn default() -> Self {
         #[cfg(target_os = "android")]
-        let download_dir = android_default_download_dir()
-            .unwrap_or_else(|| PathBuf::from("."))
-            .join("Drift");
+        let download_dir = android_default_download_dir();
         #[cfg(not(target_os = "android"))]
         let download_dir = dirs::download_dir()
             .or_else(dirs::home_dir)
