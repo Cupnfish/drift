@@ -259,6 +259,13 @@ impl Drift {
 }
 
 fn default_config_dir() -> PathBuf {
+    // Android：dirs 不支持（None → 回退 cwd，而应用进程的 cwd 是只读的 /）
+    #[cfg(target_os = "android")]
+    {
+        if let Some(dir) = crate::settings::android_files_dir() {
+            return dir.join("drift");
+        }
+    }
     dirs::config_dir()
         .unwrap_or_else(|| PathBuf::from("."))
         .join("drift")

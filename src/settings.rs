@@ -60,8 +60,66 @@ fn absolutize(p: &Path) -> PathBuf {
     }
 }
 
+// —— Android 路径（dirs 不支持 Android：home/config/download 全返回 None，
+//    应用进程的 cwd 是只读的 /，回退 "." 会把目录建到根上 → EROFS） ——
+
+/// 本应用的包名（`/proc/self/cmdline` 首段），如 `dev.drift.app`。
+#[cfg(target_os = "android")]
+pub fn android_package() -> Option<String> {
+    let cmdline = std::fs::read_to_string("/proc/self/cmdline").ok()?;
+    let pkg = cmdline.split('\0').next()?.trim();
+    (!pkg.is_empty() && !pkg.contains('/')).then(|| pkg.to_string())
+}
+
+/// 应用私有目录的父级：user 0 是 `/data/data`，工作资料等其它 userId 是
+/// `/data/user/<userId>`（uid = userId × 100000 + appId）。
+#[cfg(target_os = "android")]
+fn android_data_root() -> Option<String> {
+    let uid: u32 = std::fs::read_to_string("/proc/self/status")
+        .ok()?
+        .lines()
+        .find(|l| l.starts_with("Uid:"))?
+        .split_whitespace()
+        .nth(1)?
+        .parse()
+        .ok()?;
+    Some(if uid >= 1_000_000 {
+        format!("/data/user/{}", uid / 100_000)
+    } else {
+        "/data/data".to_string()
+    })
+}
+
+/// 应用内部私有目录（`Context.getFilesDir()` 等价物）：配置 / 身份 / 数据库。
+#[cfg(target_os = "android")]
+pub fn android_files_dir() -> Option<PathBuf> {
+    let dir = PathBuf::from(format!(
+        "{}/{}",
+        android_data_root()?,
+        android_package()?
+    ))
+    .join("files");
+    std::fs::create_dir_all(&dir).ok()?;
+    Some(dir)
+}
+
+/// 接收目录默认值：应用外部私有存储（`/storage/emulated/0/Android/data/<pkg>/files`），
+/// 免存储权限即可写入，USB / 文件管理器可见。公开的「下载」目录要走 MediaStore，
+/// 留待后续接入。
+#[cfg(target_os = "android")]
+fn android_default_download_dir() -> Option<PathBuf> {
+    let dir = PathBuf::from("/storage/emulated/0/Android/data").join(android_package()?).join("files");
+    std::fs::create_dir_all(&dir).ok()?;
+    Some(dir)
+}
+
 impl Default for Settings {
     fn default() -> Self {
+        #[cfg(target_os = "android")]
+        let download_dir = android_default_download_dir()
+            .unwrap_or_else(|| PathBuf::from("."))
+            .join("Drift");
+        #[cfg(not(target_os = "android"))]
         let download_dir = dirs::download_dir()
             .or_else(dirs::home_dir)
             .unwrap_or_else(|| PathBuf::from("."))
